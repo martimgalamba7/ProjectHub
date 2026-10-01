@@ -9,7 +9,7 @@
   <link rel="icon" type="image/png" href="./assets/favicon.png" />
   <link rel="apple-touch-icon" href="./assets/favicon.png" />
   
-  <!-- Inter & Mono Fonts -->
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -23,11 +23,6 @@
           fontFamily: {
             sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
             mono: ['"JetBrains Mono"', 'monospace'],
-          },
-          screens: {
-            '2xl': '1536px',
-            '3xl': '1920px',
-            '4xl': '2560px',
           },
         },
       },
@@ -74,57 +69,29 @@
     <!-- Section Heading -->
     <div class="space-y-6">
       
-      <div class="flex items-center justify-between pb-3 border-b border-zinc-200">
+      <div class="pb-3 border-b border-zinc-200">
         <span class="text-xs font-mono font-semibold text-zinc-400 uppercase tracking-wider">
           Semester 1 Projects
         </span>
       </div>
 
-      <!-- Project Cards Grid (Generous & High-Impact) -->
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10">
+      <!-- Project Cards Grid (2 Columns) -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-10">
 
         <!-- ================= CARD 1: CHALLENGE 1 (Smart Home) ================= -->
         <a href="https://github.com/martimgalamba7/Smart-Home" target="_blank" rel="noopener noreferrer" class="group flex flex-col bg-white rounded-3xl border border-zinc-200/80 shadow-xs hover:border-zinc-400 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 overflow-hidden cursor-pointer">
           
-          <!-- Visual Hero Area -->
-          <div class="h-64 sm:h-72 w-full bg-gradient-to-br from-zinc-950 via-zinc-900 to-emerald-950 p-7 flex flex-col justify-between relative overflow-hidden">
-            <!-- Subtle architectural grid pattern -->
-            <div class="absolute inset-0 bg-[radial-gradient(#10b981_1px,transparent_1px)] [background-size:24px_24px] opacity-15"></div>
-            
-            <!-- Top Tag & Badge -->
-            <div class="flex items-center justify-between relative z-10">
-              <span class="text-xs font-mono font-semibold text-emerald-400 bg-emerald-950/80 border border-emerald-800/60 px-2.5 py-1 rounded-full">
-                CH 01
-              </span>
-              <span class="text-xs font-medium text-zinc-400 bg-white/10 backdrop-blur-md px-3 py-1 rounded-full">
-                Semester 1 • Block 1
-              </span>
-            </div>
-
-            <!-- Graphic / Logo Centerpiece -->
-            <div class="relative z-10 flex items-center space-x-4 my-auto">
-              <div class="w-14 h-14 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 group-hover:scale-110 transition-transform duration-300">
-                <svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                </svg>
-              </div>
-              <div>
-                <h3 class="text-white font-bold text-xl leading-tight">Smart Home</h3>
-                <p class="text-xs font-mono text-emerald-400/90 mt-0.5">IoT & Automation Ecosystem</p>
-              </div>
-            </div>
-
-            <!-- Bottom Status -->
-            <div class="flex items-center justify-between text-xs font-mono text-zinc-400 relative z-10">
-              <span>Status: Completed</span>
-              <span class="text-emerald-400 font-semibold group-hover:translate-x-1 transition-transform">GitHub ↗</span>
-            </div>
+          <!-- Visual Area: Clean house icon centered with no quadratic background -->
+          <div class="h-64 sm:h-72 w-full bg-zinc-950 flex items-center justify-center p-8 relative overflow-hidden">
+            <svg class="w-20 h-20 sm:w-24 sm:h-24 text-zinc-200 group-hover:text-emerald-400 group-hover:scale-110 transition-all duration-300 stroke-[1.5]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+            </svg>
           </div>
 
-          <!-- Content Details -->
+          <!-- Content Area -->
           <div class="p-7 sm:p-8 flex-grow flex flex-col justify-between space-y-6">
             <div class="space-y-3">
-              <h2 class="text-2xl font-bold text-zinc-900 group-hover:text-emerald-600 transition-colors">
+              <h2 class="text-2xl sm:text-3xl font-bold text-zinc-900 group-hover:text-emerald-600 transition-colors">
                 Smart Home Automation
               </h2>
               <p class="text-sm sm:text-base text-zinc-500 leading-relaxed">
@@ -132,56 +99,30 @@
               </p>
             </div>
 
-            <!-- Tags & Action -->
-            <div class="flex items-center justify-between pt-2 border-t border-zinc-100">
-              <div class="flex flex-wrap gap-2">
-                <span class="px-2.5 py-1 rounded-md text-xs font-medium bg-zinc-100 text-zinc-600">IoT</span>
-                <span class="px-2.5 py-1 rounded-md text-xs font-medium bg-zinc-100 text-zinc-600">Telemetry</span>
-                <span class="px-2.5 py-1 rounded-md text-xs font-medium bg-zinc-100 text-zinc-600">Hardware</span>
-              </div>
-              <span class="text-sm font-bold text-zinc-900 group-hover:text-emerald-600 transition flex items-center gap-1">
+            <!-- Bottom Metadata & Link -->
+            <div class="flex items-center justify-between pt-4 border-t border-zinc-100 text-sm">
+              <span class="font-mono text-xs sm:text-sm text-zinc-400 font-medium">
+                Semester 1 • Challenge 1
+              </span>
+              <span class="font-bold text-zinc-900 group-hover:text-emerald-600 transition flex items-center gap-1.5">
                 View Project <span>&rarr;</span>
               </span>
             </div>
           </div>
         </a>
 
-        <!-- ================= CARD 2: CHALLENGE 2 (UniSport • Active) ================= -->
-        <a href="https://fontysict.martimgalamba7.xyz/challenge2" class="group flex flex-col bg-white rounded-3xl border-2 border-indigo-600/30 shadow-sm hover:border-indigo-600 hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-300 overflow-hidden cursor-pointer relative">
+        <!-- ================= CARD 2: CHALLENGE 2 (UniSport) ================= -->
+        <a href="https://fontysict.martimgalamba7.xyz/challenge2" class="group flex flex-col bg-white rounded-3xl border border-zinc-200/80 shadow-xs hover:border-indigo-500 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 overflow-hidden cursor-pointer">
           
-          <!-- Visual Hero Area -->
-          <div class="h-64 sm:h-72 w-full bg-gradient-to-br from-indigo-950 via-slate-950 to-blue-950 p-7 flex flex-col justify-between relative overflow-hidden">
-            <!-- Subtle athletic mesh pattern -->
-            <div class="absolute inset-0 bg-[radial-gradient(#6366f1_1px,transparent_1px)] [background-size:24px_24px] opacity-25"></div>
-            
-            <!-- Top Tag & Badge -->
-            <div class="flex items-center justify-between relative z-10">
-              <span class="text-xs font-mono font-bold text-white bg-indigo-600 px-3 py-1 rounded-full shadow-xs flex items-center gap-1.5">
-                <span class="w-2 h-2 rounded-full bg-white animate-pulse"></span>
-                CH 02 • ACTIVE
-              </span>
-              <span class="text-xs font-medium text-zinc-300 bg-white/10 backdrop-blur-md px-3 py-1 rounded-full">
-                Semester 1 • Block 2
-              </span>
-            </div>
-
-            <!-- Graphic / Logo Centerpiece -->
-            <div class="relative z-10 flex flex-col items-center justify-center my-auto space-y-2 group-hover:scale-105 transition-transform duration-300">
-              <img src="./assets/logoUniSport.png" alt="UniSport Icon" class="h-14 sm:h-16 w-auto object-contain drop-shadow-md" onerror="this.src='/assets/logoUniSport.png';" />
-              <img src="./assets/lettersUniSport.png" alt="UniSport" class="h-5 sm:h-6 w-auto object-contain brightness-0 invert opacity-95" onerror="this.src='/assets/lettersUniSport.png';" />
-            </div>
-
-            <!-- Bottom Status -->
-            <div class="flex items-center justify-between text-xs font-mono text-zinc-300 relative z-10">
-              <span>Live Platform & Academic Study</span>
-              <span class="text-indigo-300 font-semibold group-hover:translate-x-1 transition-transform">Live Demo ↗</span>
-            </div>
+          <!-- Visual Area: Clean logo letters centered with simple background -->
+          <div class="h-64 sm:h-72 w-full bg-slate-950 flex items-center justify-center p-8 relative overflow-hidden">
+            <img src="./assets/lettersUniSport.png" alt="UniSport" class="h-10 sm:h-12 w-auto object-contain brightness-0 invert opacity-95 group-hover:scale-105 transition-transform duration-300" onerror="this.src='/assets/lettersUniSport.png';" />
           </div>
 
-          <!-- Content Details -->
+          <!-- Content Area -->
           <div class="p-7 sm:p-8 flex-grow flex flex-col justify-between space-y-6">
             <div class="space-y-3">
-              <h2 class="text-2xl font-bold text-zinc-900 group-hover:text-indigo-600 transition-colors">
+              <h2 class="text-2xl sm:text-3xl font-bold text-zinc-900 group-hover:text-indigo-600 transition-colors">
                 UniSport Platform
               </h2>
               <p class="text-sm sm:text-base text-zinc-500 leading-relaxed">
@@ -189,66 +130,17 @@
               </p>
             </div>
 
-            <!-- Tags & Action -->
-            <div class="flex items-center justify-between pt-2 border-t border-zinc-100">
-              <div class="flex flex-wrap gap-2">
-                <span class="px-2.5 py-1 rounded-md text-xs font-medium bg-indigo-50 text-indigo-700">Full-Stack</span>
-                <span class="px-2.5 py-1 rounded-md text-xs font-medium bg-indigo-50 text-indigo-700">Research</span>
-                <span class="px-2.5 py-1 rounded-md text-xs font-medium bg-indigo-50 text-indigo-700">Community</span>
-              </div>
-              <span class="text-sm font-bold text-indigo-600 transition flex items-center gap-1">
-                Open Platform <span>&rarr;</span>
+            <!-- Bottom Metadata & Link -->
+            <div class="flex items-center justify-between pt-4 border-t border-zinc-100 text-sm">
+              <span class="font-mono text-xs sm:text-sm text-zinc-400 font-medium">
+                Semester 1 • Challenge 2
+              </span>
+              <span class="font-bold text-zinc-900 group-hover:text-indigo-600 transition flex items-center gap-1.5">
+                View Project <span>&rarr;</span>
               </span>
             </div>
           </div>
         </a>
-
-        <!-- ================= CARD 3: CHALLENGE 3 (Upcoming) ================= -->
-        <div class="flex flex-col bg-white rounded-3xl border border-dashed border-zinc-300 shadow-xs overflow-hidden opacity-90">
-          
-          <!-- Visual Hero Area -->
-          <div class="h-64 sm:h-72 w-full bg-zinc-50 border-b border-zinc-100 p-7 flex flex-col justify-between relative">
-            <div class="flex items-center justify-between">
-              <span class="text-xs font-mono text-zinc-400 bg-zinc-200/80 px-2.5 py-1 rounded-full">
-                CH 03
-              </span>
-              <span class="text-xs font-medium text-zinc-400">
-                Semester 2 • Block 3
-              </span>
-            </div>
-
-            <div class="my-auto text-center space-y-1">
-              <div class="text-3xl font-black text-zinc-300 tracking-tight">Challenge 3</div>
-              <div class="text-xs font-mono text-zinc-400 uppercase tracking-wider">Advanced ICT Coursework</div>
-            </div>
-
-            <div class="text-xs font-mono text-zinc-400">
-              Status: In Planning
-            </div>
-          </div>
-
-          <!-- Content Details -->
-          <div class="p-7 sm:p-8 flex-grow flex flex-col justify-between space-y-6">
-            <div class="space-y-3">
-              <h2 class="text-2xl font-bold text-zinc-700">
-                Upcoming Challenge
-              </h2>
-              <p class="text-sm sm:text-base text-zinc-400 leading-relaxed">
-                Next stage practical development and advanced semester coursework. Coming soon upon semester commencement.
-              </p>
-            </div>
-
-            <!-- Tags & Status -->
-            <div class="flex items-center justify-between pt-2 border-t border-zinc-100">
-              <div class="flex flex-wrap gap-2">
-                <span class="px-2.5 py-1 rounded-md text-xs font-medium bg-zinc-100 text-zinc-400">Semester 2</span>
-              </div>
-              <span class="text-xs font-mono font-medium text-zinc-400 uppercase tracking-wider">
-                Coming Soon
-              </span>
-            </div>
-          </div>
-        </div>
 
       </div>
 
