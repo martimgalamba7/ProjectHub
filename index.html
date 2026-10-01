@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" class="h-full bg-[#fbfbfb] text-zinc-900 antialiased selection:bg-zinc-900 selection:text-white">
+<html lang="en" class="h-full scroll-smooth bg-[#fbfbfb] text-zinc-900 antialiased selection:bg-zinc-900 selection:text-white">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Fontys ICT • Academic Portfolio | Martim Galamba</title>
+  <title>Martim Galamba • Academic Portfolio</title>
   
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="./assets/favicon.png" />
@@ -12,7 +12,7 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -24,49 +24,79 @@
             sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
             mono: ['"JetBrains Mono"', 'monospace'],
           },
+          screens: {
+            '2xl': '1536px',
+            '3xl': '1920px',
+            '4xl': '2560px',
+          },
         },
       },
     }
   </script>
 </head>
 
-<body class="min-h-screen flex flex-col justify-between font-sans bg-[#fbfbfb] text-zinc-900">
+<body class="min-h-screen flex flex-col font-sans bg-[#fbfbfb] text-zinc-900 overflow-x-hidden">
 
-  <!-- ================= TOP HEADER ================= -->
-  <header class="w-full border-b border-zinc-200/70 bg-[#fbfbfb]/80 backdrop-blur-md sticky top-0 z-40">
-    <div class="w-full max-w-[1800px] mx-auto px-6 sm:px-12 lg:px-16 2xl:px-24 h-20 sm:h-24 flex items-center justify-between">
-      
-      <!-- Breadcrumb ("cd" path) -->
-      <nav aria-label="Breadcrumb" class="flex items-center space-x-2 text-xs sm:text-sm font-mono text-zinc-500">
-        <span class="text-zinc-400">fontys</span>
-        <span class="text-zinc-300">/</span>
-        <span class="text-zinc-700 font-medium hover:text-zinc-900 transition">martimgalamba</span>
-        <span class="text-zinc-300">/</span>
-        <span class="text-zinc-900 font-semibold bg-zinc-200/60 px-2 py-0.5 rounded text-xs">projects</span>
-      </nav>
-
-      <!-- Fontys Logo -->
-      <a href="https://www.fontys.nl/" target="_blank" rel="noopener noreferrer" title="Fontys University of Applied Sciences" class="hover:opacity-75 transition-opacity">
-        <img src="./assets/logoFontys.png" alt="Fontys" class="h-8 sm:h-9 w-auto object-contain" onerror="this.src='/assets/logoFontys.png';" />
-      </a>
-
-    </div>
-  </header>
-
-  <!-- ================= MAIN CONTENT ================= -->
-  <main class="w-full flex-grow max-w-[1800px] mx-auto px-6 sm:px-12 lg:px-16 2xl:px-24 py-12 sm:py-20 flex flex-col justify-center space-y-12 sm:space-y-16">
+  <!-- ================= SECTION 1: HERO VIEWPORT (100vh) ================= -->
+  <section class="h-screen min-h-[100dvh] w-full flex flex-col justify-between relative bg-[#fbfbfb] border-b border-zinc-200/70 overflow-hidden">
     
-    <!-- Hero Section -->
-    <div class="space-y-4 max-w-4xl">
-      <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-zinc-900 leading-[1.08]">
-        Academic Portfolio
+    <!-- Top Header Navigation -->
+    <header class="w-full relative z-20">
+      <div class="w-full max-w-[1800px] mx-auto px-6 sm:px-12 lg:px-16 2xl:px-24 h-20 sm:h-24 flex items-center justify-between">
+        
+        <!-- Breadcrumb ("cd" path) -->
+        <nav aria-label="Breadcrumb" class="flex items-center space-x-2 text-xs sm:text-sm font-mono text-zinc-500 select-none">
+          <span class="text-zinc-400">fontys</span>
+          <span class="text-zinc-300">/</span>
+          <span class="text-zinc-700 font-medium">martimgalamba</span>
+          <span class="text-zinc-300">/</span>
+          <span class="text-zinc-900 font-semibold bg-zinc-200/60 px-2 py-0.5 rounded text-xs">projects</span>
+        </nav>
+
+        <!-- Fontys Logo -->
+        <a href="https://www.fontys.nl/" target="_blank" rel="noopener noreferrer" title="Fontys University of Applied Sciences" class="hover:opacity-75 transition-opacity">
+          <img src="./assets/logoFontys.png" alt="Fontys" class="h-8 sm:h-9 w-auto object-contain" onerror="this.src='/assets/logoFontys.png';" />
+        </a>
+
+      </div>
+    </header>
+
+    <!-- Center Monumental Name Display -->
+    <div class="flex-grow flex flex-col items-center justify-center text-center px-4 sm:px-8 relative z-10 select-none my-auto">
+      <h1 class="text-[clamp(2.75rem,9.2vw,14rem)] font-black tracking-[-0.04em] uppercase text-zinc-900 leading-[0.9] text-center w-full max-w-[96vw]">
+        MARTIM GALAMBA
       </h1>
+      <p class="text-xs sm:text-sm md:text-base font-mono tracking-widest uppercase text-zinc-400 mt-4 sm:mt-6">
+        Software Engineering &bull; Fontys ICT
+      </p>
+    </div>
+
+    <!-- Bottom Scroll Indicator -->
+    <div class="w-full flex items-center justify-center pb-8 sm:pb-10 relative z-20 select-none">
+      <a href="#portfolio" class="inline-flex flex-col items-center space-y-2.5 text-xs font-mono text-zinc-400 hover:text-zinc-900 transition-colors group">
+        <span class="tracking-widest uppercase text-[11px] font-medium text-zinc-400 group-hover:text-zinc-800 transition">Scroll to Explore</span>
+        <div class="w-5 h-9 rounded-full border border-zinc-300 flex items-start justify-center p-1 group-hover:border-zinc-800 transition">
+          <div class="w-1 h-2 bg-zinc-800 rounded-full animate-bounce"></div>
+        </div>
+      </a>
+    </div>
+
+  </section>
+
+  <!-- ================= SECTION 2: ACADEMIC PORTFOLIO ================= -->
+  <section id="portfolio" class="min-h-screen w-full flex flex-col justify-between py-16 sm:py-24 px-6 sm:px-12 lg:px-16 2xl:px-24 max-w-[1800px] mx-auto space-y-12 sm:space-y-16">
+    
+    <!-- Title & Description -->
+    <div class="space-y-4 max-w-4xl">
+      <h2 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-zinc-900 leading-[1.08]">
+        Academic Portfolio
+      </h2>
       <p class="text-lg sm:text-xl lg:text-2xl text-zinc-500 leading-relaxed font-normal max-w-3xl">
         A showcase of challenges developed throughout my Bachelor of ICT at Fontys University of Applied Sciences.
       </p>
     </div>
 
-    <!-- Section Heading -->
+    <!-- Section Divider -->
     <div class="space-y-6">
       
       <div class="pb-3 border-b border-zinc-200">
@@ -91,9 +121,9 @@
           <!-- Content Area -->
           <div class="p-7 sm:p-8 flex-grow flex flex-col justify-between space-y-6">
             <div class="space-y-3">
-              <h2 class="text-2xl sm:text-3xl font-bold text-zinc-900 group-hover:text-emerald-600 transition-colors">
+              <h3 class="text-2xl sm:text-3xl font-bold text-zinc-900 group-hover:text-emerald-600 transition-colors">
                 Smart Home Automation
-              </h2>
+              </h3>
               <p class="text-sm sm:text-base text-zinc-500 leading-relaxed">
                 IoT smart home ecosystem exploring home automation, sensor telemetry, and embedded system architecture.
               </p>
@@ -112,19 +142,19 @@
         </a>
 
         <!-- ================= CARD 2: CHALLENGE 2 (UniSport) ================= -->
-        <a href="https://fontysict.martimgalamba7.xyz/challenge2" class="group flex flex-col bg-white rounded-3xl border border-zinc-200/80 shadow-xs hover:border-indigo-500 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 overflow-hidden cursor-pointer">
+        <a href="https://fontysict.martimgalamba7.xyz/challenge2" class="group flex flex-col bg-white rounded-3xl border border-zinc-200/80 shadow-xs hover:border-indigo-500 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 overflow-hidden cursor-pointer relative">
           
           <!-- Visual Area: Clean logo letters centered with simple background -->
           <div class="h-64 sm:h-72 w-full bg-slate-950 flex items-center justify-center p-8 relative overflow-hidden">
-            <img src="./assets/lettersUniSport.png" alt="UniSport" class="h-10 sm:h-12 w-auto object-contain brightness-0 invert opacity-95 group-hover:scale-105 transition-transform duration-300" onerror="this.src='/assets/lettersUniSport.png';" />
+            <img src="./assets/lettersUniSport.png" alt="UniSport" class="h-12 sm:h-16 w-auto max-w-[80%] object-contain brightness-0 invert opacity-95 group-hover:scale-105 transition-transform duration-300" onerror="this.src='/assets/lettersUniSport.png';" />
           </div>
 
           <!-- Content Area -->
           <div class="p-7 sm:p-8 flex-grow flex flex-col justify-between space-y-6">
             <div class="space-y-3">
-              <h2 class="text-2xl sm:text-3xl font-bold text-zinc-900 group-hover:text-indigo-600 transition-colors">
+              <h3 class="text-2xl sm:text-3xl font-bold text-zinc-900 group-hover:text-indigo-600 transition-colors">
                 UniSport Platform
-              </h2>
+              </h3>
               <p class="text-sm sm:text-base text-zinc-500 leading-relaxed">
                 Sports community web platform and empirical academic research study examining university athletic engagement and social networking.
               </p>
@@ -146,15 +176,15 @@
 
     </div>
 
-  </main>
+    <!-- ================= FOOTER ================= -->
+    <footer class="w-full border-t border-zinc-200/80 pt-8 mt-16">
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-3 text-xs sm:text-sm text-zinc-500">
+        <span class="font-medium text-zinc-800">Martim Ferreira Galamba</span>
+        <span class="text-zinc-500">Fontys University of Applied Sciences • Fontys ICT</span>
+      </div>
+    </footer>
 
-  <!-- ================= FOOTER ================= -->
-  <footer class="w-full border-t border-zinc-200/80 bg-white py-8 mt-16">
-    <div class="w-full max-w-[1800px] mx-auto px-6 sm:px-12 lg:px-16 2xl:px-24 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs sm:text-sm text-zinc-500">
-      <span class="font-medium text-zinc-800">Martim Ferreira Galamba</span>
-      <span class="text-zinc-500">Fontys University of Applied Sciences • Fontys ICT</span>
-    </div>
-  </footer>
+  </section>
 
 </body>
 </html>
