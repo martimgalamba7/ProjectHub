@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="h-full bg-slate-950 text-slate-100 antialiased selection:bg-indigo-500 selection:text-white">
+<html lang="en" class="h-full bg-[#fafafa] text-zinc-900 antialiased selection:bg-zinc-900 selection:text-white">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -9,10 +9,10 @@
   <link rel="icon" type="image/png" href="./assets/favicon.png" />
   <link rel="apple-touch-icon" href="./assets/favicon.png" />
   
-  <!-- Inter & JetBrains Mono Fonts -->
+  <!-- Inter & Mono Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -21,400 +21,240 @@
       theme: {
         extend: {
           fontFamily: {
-            sans: ['Inter', 'sans-serif'],
+            sans: ['Inter', 'system-ui', 'sans-serif'],
             mono: ['"JetBrains Mono"', 'monospace'],
           },
-          screens: {
-            '3xl': '1920px',
-            '4xl': '2560px',
-          },
-          animation: {
-            'pulse-subtle': 'pulseSubtle 4s ease-in-out infinite',
-            'spin-slow': 'spin 18s linear infinite',
-          },
-          keyframes: {
-            pulseSubtle: {
-              '0%, 100%': { opacity: 0.25, transform: 'scale(1)' },
-              '50%': { opacity: 0.45, transform: 'scale(1.08)' },
-            }
-          }
         },
       },
     }
   </script>
 
   <style>
-    /* Dynamic Ambient Background Transition */
-    #ambient-canvas {
-      transition: background 1s cubic-bezier(0.4, 0, 0.2, 1), filter 1s ease;
+    /* Smooth card transitions */
+    .slider-track {
+      display: flex;
+      gap: 1.5rem;
+      transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+      scroll-snap-type: x mandatory;
     }
-
-    /* 3D Perspective Carousel */
-    .carousel-perspective-stage {
-      perspective: 1600px;
-      transform-style: preserve-3d;
+    .slide-item {
+      scroll-snap-align: start;
+      flex: 0 0 calc(100% - 0rem);
     }
-
-    .project-card {
-      transition: transform 0.65s cubic-bezier(0.23, 1, 0.32, 1),
-                  opacity 0.65s cubic-bezier(0.23, 1, 0.32, 1),
-                  filter 0.65s cubic-bezier(0.23, 1, 0.32, 1),
-                  box-shadow 0.65s cubic-bezier(0.23, 1, 0.32, 1),
-                  border-color 0.4s ease;
-      will-change: transform, opacity, filter;
+    @media (min-width: 768px) {
+      .slide-item {
+        flex: 0 0 calc(50% - 0.75rem);
+      }
     }
-
-    /* Active Card State */
-    .project-card.is-active {
-      transform: translateX(0%) scale(1.03) translateZ(0px) rotateY(0deg);
-      opacity: 1;
-      filter: blur(0px);
-      z-index: 20;
-      pointer-events: auto;
-    }
-
-    /* Left Inactive Card State */
-    .project-card.is-prev {
-      transform: translateX(calc(-85% - 2rem)) scale(0.88) translateZ(-120px) rotateY(14deg);
-      opacity: 0.35;
-      filter: blur(1.5px) grayscale(25%);
-      z-index: 10;
-      cursor: pointer;
-    }
-    .project-card.is-prev:hover {
-      opacity: 0.7;
-      filter: blur(0px) grayscale(0%);
-      transform: translateX(calc(-85% - 1.5rem)) scale(0.91) translateZ(-80px) rotateY(10deg);
-    }
-
-    /* Right Inactive Card State */
-    .project-card.is-next {
-      transform: translateX(calc(85% + 2rem)) scale(0.88) translateZ(-120px) rotateY(-14deg);
-      opacity: 0.35;
-      filter: blur(1.5px) grayscale(25%);
-      z-index: 10;
-      cursor: pointer;
-    }
-    .project-card.is-next:hover {
-      opacity: 0.7;
-      filter: blur(0px) grayscale(0%);
-      transform: translateX(calc(85% + 1.5rem)) scale(0.91) translateZ(-80px) rotateY(-10deg);
-    }
-
-    /* Hidden distant cards */
-    .project-card.is-hidden-left {
-      transform: translateX(-160%) scale(0.7) translateZ(-300px);
-      opacity: 0;
-      pointer-events: none;
-      z-index: 0;
-    }
-    .project-card.is-hidden-right {
-      transform: translateX(160%) scale(0.7) translateZ(-300px);
-      opacity: 0;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    /* Progress bar animation */
-    .progress-bar-fill {
-      transition: width 0.1s linear;
-    }
-
-    /* Custom ultra-wide viewport fluidity */
-    @media (min-width: 2560px) {
-      .ultra-fluid-container {
-        max-width: 2200px !important;
+    @media (min-width: 1200px) {
+      .slide-item {
+        flex: 0 0 calc(33.333% - 1rem);
       }
     }
   </style>
 </head>
 
-<body class="min-h-screen flex flex-col justify-between font-sans relative overflow-x-hidden bg-slate-950">
+<body class="min-h-screen flex flex-col justify-between font-sans bg-[#fafafa] text-zinc-900">
 
-  <!-- ================= DYNAMIC AMBIENT BACKDROP ================= -->
-  <div id="ambient-canvas" class="fixed inset-0 pointer-events-none z-0">
-    <!-- Ambient glowing orbs -->
-    <div id="ambient-orb-1" class="absolute -top-[15%] left-[10%] w-[55vw] max-w-[850px] h-[55vw] max-h-[850px] rounded-full bg-indigo-600/15 blur-[120px] transition-all duration-1000 animate-pulse-subtle"></div>
-    <div id="ambient-orb-2" class="absolute top-[35%] -right-[10%] w-[50vw] max-w-[750px] h-[50vw] max-h-[750px] rounded-full bg-cyan-600/10 blur-[130px] transition-all duration-1000"></div>
-    <div id="ambient-orb-3" class="absolute -bottom-[20%] left-[30%] w-[60vw] max-w-[900px] h-[60vw] max-h-[900px] rounded-full bg-blue-700/10 blur-[140px] transition-all duration-1000"></div>
-    <!-- Fine Subtle Grid -->
-    <div class="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_40%,#000_70%,transparent_100%)]"></div>
-  </div>
-
-  <!-- ================= TOP HEADER WITH CD TERMINAL PATH ================= -->
-  <header class="w-full relative z-30 border-b border-white/[0.07] bg-slate-950/70 backdrop-blur-xl">
-    <div class="w-full max-w-[1700px] ultra-fluid-container mx-auto px-6 sm:px-10 lg:px-16 h-20 sm:h-24 flex items-center justify-between">
+  <!-- ================= TOP HEADER ================= -->
+  <header class="w-full border-b border-zinc-200/80 bg-white/80 backdrop-blur-md sticky top-0 z-40">
+    <div class="max-w-6xl mx-auto px-6 sm:px-10 h-16 sm:h-20 flex items-center justify-between">
       
-      <!-- Terminal Path Navigation ("cd" feel) -->
-      <div class="flex items-center space-x-1.5 sm:space-x-2 text-xs sm:text-sm font-mono tracking-tight text-slate-400 select-none">
-        <span class="text-indigo-400 font-bold">~</span>
-        <span class="text-slate-600">/</span>
-        <span class="text-slate-400 hover:text-white transition">fontys</span>
-        <span class="text-slate-600">/</span>
-        <span class="text-slate-300 font-medium hover:text-white transition">martimgalamba</span>
-        <span class="text-slate-600">/</span>
-        <span class="text-white font-semibold bg-white/10 px-2.5 py-0.5 rounded-lg border border-white/10 shadow-xs flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-          projects
-        </span>
-      </div>
+      <!-- Breadcrumb Path ("cd" style) -->
+      <nav aria-label="Breadcrumb" class="flex items-center space-x-2 text-xs sm:text-sm font-mono text-zinc-500">
+        <span class="text-zinc-400">fontys</span>
+        <span class="text-zinc-300">/</span>
+        <span class="text-zinc-600 font-medium">martimgalamba</span>
+        <span class="text-zinc-300">/</span>
+        <span class="text-zinc-900 font-semibold">projects</span>
+      </nav>
 
-      <!-- Fontys Logo Link -->
-      <a href="https://www.fontys.nl/" target="_blank" rel="noopener noreferrer" title="Fontys University of Applied Sciences" class="flex items-center space-x-3 group transition-transform duration-300 hover:scale-105">
-        <div class="p-2 rounded-xl bg-white/5 border border-white/10 group-hover:border-white/20 transition backdrop-blur-md">
-          <img src="./assets/logoFontys.png" alt="Fontys" class="h-6 sm:h-8 w-auto object-contain brightness-100" onerror="this.src='/assets/logoFontys.png';" />
-        </div>
+      <!-- Fontys Logo -->
+      <a href="https://www.fontys.nl/" target="_blank" rel="noopener noreferrer" title="Fontys University of Applied Sciences" class="hover:opacity-75 transition-opacity">
+        <img src="./assets/logoFontys.png" alt="Fontys" class="h-7 sm:h-8 w-auto object-contain" onerror="this.src='/assets/logoFontys.png';" />
       </a>
 
     </div>
   </header>
 
-  <!-- ================= MAIN STAGE / CAROUSEL EXPERIENCE ================= -->
-  <main class="w-full flex-grow flex flex-col justify-center relative z-20 max-w-[1700px] ultra-fluid-container mx-auto px-4 sm:px-8 lg:px-16 py-8 sm:py-12 space-y-8 sm:space-y-12">
+  <!-- ================= MAIN CONTENT ================= -->
+  <main class="w-full flex-grow max-w-6xl mx-auto px-6 sm:px-10 py-12 sm:py-20 flex flex-col justify-center space-y-12 sm:space-y-16">
     
-    <!-- Hero Heading & Description (No badge, fluid typography) -->
-    <div class="text-center max-w-4xl mx-auto space-y-4 px-4">
-      <h1 class="text-3xl sm:text-5xl lg:text-6xl 2xl:text-7xl font-black text-white tracking-tight leading-[1.1]">
+    <!-- Hero Section -->
+    <div class="max-w-2xl space-y-4">
+      <h1 class="text-3xl sm:text-4xl sm:leading-tight font-extrabold tracking-tight text-zinc-900">
         Academic Portfolio
       </h1>
-      <p class="text-base sm:text-lg lg:text-xl text-slate-400 leading-relaxed font-normal max-w-3xl mx-auto">
-        A curated showcase of engineering challenges, applied software systems, and empirical research developed throughout my Bachelor of ICT at Fontys University of Applied Sciences.
+      <p class="text-base sm:text-lg text-zinc-500 leading-relaxed font-normal">
+        A showcase of engineering challenges, applied software systems, and empirical research developed throughout my Bachelor of ICT at Fontys University of Applied Sciences.
       </p>
     </div>
 
-    <!-- 3D Carousel Stage -->
-    <div class="relative w-full carousel-perspective-stage flex items-center justify-center py-4 select-none" id="carousel-container">
+    <!-- Projects Gallery / Carousel Area -->
+    <div class="space-y-6">
       
-      <!-- Cards Wrapper -->
-      <div class="relative w-full max-w-md sm:max-w-xl lg:max-w-2xl 2xl:max-w-3xl h-[520px] sm:h-[560px] 2xl:h-[600px] flex items-center justify-center" id="card-stage">
-
-        <!-- ================= CARD 0: CHALLENGE 1 (Smart Home) ================= -->
-        <article class="project-card absolute inset-0 w-full h-full bg-slate-900/90 backdrop-blur-2xl rounded-3xl border border-white/10 shadow-2xl flex flex-col justify-between overflow-hidden group" data-index="0" data-theme="emerald">
-          
-          <!-- Banner Preview Area -->
-          <div class="h-[46%] w-full bg-gradient-to-br from-emerald-950 via-slate-950 to-slate-900 border-b border-emerald-500/20 relative p-6 flex flex-col justify-between overflow-hidden">
-            <!-- Background mesh -->
-            <div class="absolute inset-0 bg-[radial-gradient(#10b981_1px,transparent_1px)] [background-size:20px_20px] opacity-20"></div>
-            
-            <!-- Top Card Header Badges -->
-            <div class="flex items-center justify-between relative z-10">
-              <span class="px-3 py-1 rounded-full text-xs font-mono font-medium bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 backdrop-blur-md">
-                Semester 1 • Block 1
-              </span>
-              <span class="px-3 py-1 rounded-full text-xs font-semibold bg-white/10 text-slate-300 border border-white/10 backdrop-blur-md">
-                Completed
-              </span>
-            </div>
-
-            <!-- Graphic Visual -->
-            <div class="relative z-10 flex items-center justify-center my-auto space-x-4">
-              <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center shadow-lg shadow-emerald-950/50 group-hover:scale-110 transition-transform duration-500">
-                <svg class="w-8 h-8 sm:w-10 sm:h-10 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                </svg>
-              </div>
-              <div class="text-left">
-                <div class="text-xs font-mono text-emerald-400/90 uppercase tracking-wider font-semibold">Challenge 01</div>
-                <div class="text-xl sm:text-2xl font-black text-white tracking-tight">Smart Home Automation</div>
-              </div>
-            </div>
-
-            <!-- Subtle bottom glow -->
-            <div class="absolute -bottom-10 left-1/2 -translate-x-1/2 w-48 h-20 bg-emerald-500/20 blur-2xl pointer-events-none"></div>
-          </div>
-
-          <!-- Card Content Body -->
-          <div class="p-6 sm:p-8 flex-grow flex flex-col justify-between space-y-4">
-            
-            <div class="space-y-3">
-              <h2 class="text-xl sm:text-2xl font-bold text-white group-hover:text-emerald-400 transition-colors">
-                IoT Home Automation Ecosystem
-              </h2>
-              <p class="text-sm sm:text-base text-slate-300 leading-relaxed font-normal">
-                End-to-end smart home system engineering, integrating sensor telemetry, device state synchronization, and embedded automation protocols.
-              </p>
-            </div>
-
-            <!-- Tech Tags -->
-            <div class="flex flex-wrap gap-2 pt-1">
-              <span class="px-2.5 py-1 rounded-lg text-xs font-medium bg-slate-800/80 text-slate-300 border border-slate-700/60">IoT & Telemetry</span>
-              <span class="px-2.5 py-1 rounded-lg text-xs font-medium bg-slate-800/80 text-slate-300 border border-slate-700/60">Embedded Systems</span>
-              <span class="px-2.5 py-1 rounded-lg text-xs font-medium bg-slate-800/80 text-slate-300 border border-slate-700/60">Home Automation</span>
-            </div>
-
-            <!-- Action Button -->
-            <div class="pt-2">
-              <a href="https://github.com/martimgalamba7/Smart-Home" target="_blank" rel="noopener noreferrer" class="w-full py-3.5 px-6 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm sm:text-base transition-all duration-200 shadow-lg shadow-emerald-900/30 hover:shadow-emerald-600/30 flex items-center justify-between group/btn">
-                <span class="flex items-center gap-2">
-                  <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
-                    <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"></path>
-                  </svg>
-                  <span>Explore on GitHub</span>
-                </span>
-                <span class="group-hover/btn:translate-x-1 transition-transform font-mono text-lg">&rarr;</span>
-              </a>
-            </div>
-
-          </div>
-        </article>
-
-        <!-- ================= CARD 1: CHALLENGE 2 (UniSport • Active Featured) ================= -->
-        <article class="project-card absolute inset-0 w-full h-full bg-slate-900/90 backdrop-blur-2xl rounded-3xl border border-indigo-500/40 shadow-2xl flex flex-col justify-between overflow-hidden group" data-index="1" data-theme="indigo">
-          
-          <!-- Banner Preview Area -->
-          <div class="h-[46%] w-full bg-gradient-to-br from-indigo-950 via-slate-950 to-blue-950 border-b border-indigo-500/30 relative p-6 flex flex-col justify-between overflow-hidden">
-            <!-- Background mesh -->
-            <div class="absolute inset-0 bg-[radial-gradient(#6366f1_1px,transparent_1px)] [background-size:20px_20px] opacity-30"></div>
-            
-            <!-- Top Card Header Badges -->
-            <div class="flex items-center justify-between relative z-10">
-              <span class="px-3 py-1 rounded-full text-xs font-mono font-medium bg-indigo-500/20 text-indigo-300 border border-indigo-500/40 backdrop-blur-md">
-                Semester 1 • Block 2
-              </span>
-              <span class="px-3 py-1 rounded-full text-xs font-bold bg-indigo-600 text-white shadow-md shadow-indigo-600/30 flex items-center gap-1.5">
-                <span class="w-2 h-2 rounded-full bg-white animate-pulse"></span>
-                Active Project
-              </span>
-            </div>
-
-            <!-- Graphic Visual -->
-            <div class="relative z-10 flex flex-col items-center justify-center my-auto space-y-2 group-hover:scale-105 transition-transform duration-500">
-              <img src="./assets/logoUniSport.png" alt="UniSport Icon" class="h-16 sm:h-20 w-auto object-contain drop-shadow-xl" onerror="this.src='/assets/logoUniSport.png';" />
-              <img src="./assets/lettersUniSport.png" alt="UniSport" class="h-6 sm:h-7 w-auto object-contain brightness-0 invert opacity-95" onerror="this.src='/assets/lettersUniSport.png';" />
-            </div>
-
-            <!-- Subtle bottom glow -->
-            <div class="absolute -bottom-10 left-1/2 -translate-x-1/2 w-64 h-24 bg-indigo-500/30 blur-3xl pointer-events-none"></div>
-          </div>
-
-          <!-- Card Content Body -->
-          <div class="p-6 sm:p-8 flex-grow flex flex-col justify-between space-y-4">
-            
-            <div class="space-y-3">
-              <h2 class="text-xl sm:text-2xl font-bold text-white group-hover:text-indigo-400 transition-colors">
-                UniSport • Sports Community Platform
-              </h2>
-              <p class="text-sm sm:text-base text-slate-300 leading-relaxed font-normal">
-                An interactive sports community platform and empirical student research study analyzing athletic habits and campus community engagement.
-              </p>
-            </div>
-
-            <!-- Tech Tags -->
-            <div class="flex flex-wrap gap-2 pt-1">
-              <span class="px-2.5 py-1 rounded-lg text-xs font-medium bg-indigo-950/60 text-indigo-300 border border-indigo-800/50">Full-Stack Web</span>
-              <span class="px-2.5 py-1 rounded-lg text-xs font-medium bg-indigo-950/60 text-indigo-300 border border-indigo-800/50">Academic Research</span>
-              <span class="px-2.5 py-1 rounded-lg text-xs font-medium bg-indigo-950/60 text-indigo-300 border border-indigo-800/50">Analytics & Survey</span>
-            </div>
-
-            <!-- Action Button -->
-            <div class="pt-2">
-              <a href="https://fontysict.martimgalamba7.xyz/challenge2" class="w-full py-3.5 px-6 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-sm sm:text-base transition-all duration-200 shadow-lg shadow-indigo-600/30 hover:shadow-indigo-500/40 flex items-center justify-between group/btn">
-                <span>Open Challenge 2 Platform</span>
-                <span class="group-hover/btn:translate-x-1.5 transition-transform font-mono text-lg">&rarr;</span>
-              </a>
-            </div>
-
-          </div>
-        </article>
-
-        <!-- ================= CARD 2: CHALLENGE 3 (Upcoming) ================= -->
-        <article class="project-card absolute inset-0 w-full h-full bg-slate-900/90 backdrop-blur-2xl rounded-3xl border border-white/10 shadow-2xl flex flex-col justify-between overflow-hidden group" data-index="2" data-theme="violet">
-          
-          <!-- Banner Preview Area -->
-          <div class="h-[46%] w-full bg-gradient-to-br from-violet-950 via-slate-950 to-slate-900 border-b border-violet-500/20 relative p-6 flex flex-col justify-between overflow-hidden">
-            <!-- Background mesh -->
-            <div class="absolute inset-0 bg-[radial-gradient(#8b5cf6_1px,transparent_1px)] [background-size:20px_20px] opacity-20"></div>
-            
-            <!-- Top Card Header Badges -->
-            <div class="flex items-center justify-between relative z-10">
-              <span class="px-3 py-1 rounded-full text-xs font-mono font-medium bg-violet-500/15 text-violet-400 border border-violet-500/30 backdrop-blur-md">
-                Semester 2 • Block 3
-              </span>
-              <span class="px-3 py-1 rounded-full text-xs font-semibold bg-white/10 text-slate-300 border border-white/10 backdrop-blur-md">
-                In Planning
-              </span>
-            </div>
-
-            <!-- Graphic Visual -->
-            <div class="relative z-10 flex items-center justify-center my-auto space-x-4">
-              <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-violet-500/10 border border-violet-500/30 flex items-center justify-center shadow-lg shadow-violet-950/50 group-hover:scale-110 transition-transform duration-500">
-                <svg class="w-8 h-8 sm:w-10 sm:h-10 text-violet-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-                </svg>
-              </div>
-              <div class="text-left">
-                <div class="text-xs font-mono text-violet-400/90 uppercase tracking-wider font-semibold">Challenge 03</div>
-                <div class="text-xl sm:text-2xl font-black text-white tracking-tight">Advanced Systems</div>
-              </div>
-            </div>
-
-            <!-- Subtle bottom glow -->
-            <div class="absolute -bottom-10 left-1/2 -translate-x-1/2 w-48 h-20 bg-violet-500/20 blur-2xl pointer-events-none"></div>
-          </div>
-
-          <!-- Card Content Body -->
-          <div class="p-6 sm:p-8 flex-grow flex flex-col justify-between space-y-4">
-            
-            <div class="space-y-3">
-              <h2 class="text-xl sm:text-2xl font-bold text-white group-hover:text-violet-400 transition-colors">
-                Upcoming Academic Challenge
-              </h2>
-              <p class="text-sm sm:text-base text-slate-300 leading-relaxed font-normal">
-                Next-generation practical engineering challenge focusing on distributed architectures, cloud services, and scalable modern web solutions.
-              </p>
-            </div>
-
-            <!-- Tech Tags -->
-            <div class="flex flex-wrap gap-2 pt-1">
-              <span class="px-2.5 py-1 rounded-lg text-xs font-medium bg-slate-800/80 text-slate-300 border border-slate-700/60">Cloud Systems</span>
-              <span class="px-2.5 py-1 rounded-lg text-xs font-medium bg-slate-800/80 text-slate-300 border border-slate-700/60">Software Architecture</span>
-              <span class="px-2.5 py-1 rounded-lg text-xs font-medium bg-slate-800/80 text-slate-300 border border-slate-700/60">Semester 2</span>
-            </div>
-
-            <!-- Action Button -->
-            <div class="pt-2">
-              <button disabled class="w-full py-3.5 px-6 rounded-2xl bg-white/5 border border-white/10 text-slate-400 font-semibold text-sm sm:text-base cursor-not-allowed flex items-center justify-between">
-                <span>Coming Soon</span>
-                <span class="font-mono text-xs text-slate-400 uppercase tracking-wider">Semester 2</span>
-              </button>
-            </div>
-
-          </div>
-        </article>
-
+      <!-- Carousel Header Controls (Arrows & Counter) -->
+      <div class="flex items-center justify-between pb-2 border-b border-zinc-200/60">
+        <div class="text-xs font-mono text-zinc-400 uppercase tracking-wider">
+          Semester 1 Projects &bull; 03 Items
+        </div>
+        
+        <div class="flex items-center space-x-2">
+          <button id="prev-btn" aria-label="Previous project" class="p-2 rounded-lg border border-zinc-200 bg-white hover:bg-zinc-100 text-zinc-700 transition disabled:opacity-30 disabled:cursor-not-allowed">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
+          <button id="next-btn" aria-label="Next project" class="p-2 rounded-lg border border-zinc-200 bg-white hover:bg-zinc-100 text-zinc-700 transition disabled:opacity-30 disabled:cursor-not-allowed">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+        </div>
       </div>
 
-      <!-- Navigation Arrows (Left & Right) -->
-      <button id="btn-prev" aria-label="Previous Challenge" class="absolute left-2 sm:left-6 lg:left-12 2xl:left-24 top-1/2 -translate-y-1/2 z-30 p-3 sm:p-4 rounded-2xl bg-slate-900/80 hover:bg-slate-800 text-white border border-white/10 hover:border-white/20 shadow-xl backdrop-blur-xl transition-all duration-200 hover:scale-110 active:scale-95 group">
-        <svg class="w-6 h-6 text-slate-300 group-hover:text-white transition-transform group-hover:-translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7" />
-        </svg>
-      </button>
+      <!-- Slider Stage -->
+      <div class="overflow-hidden relative" id="slider-container">
+        <div class="slider-track" id="slider-track">
 
-      <button id="btn-next" aria-label="Next Challenge" class="absolute right-2 sm:right-6 lg:right-12 2xl:right-24 top-1/2 -translate-y-1/2 z-30 p-3 sm:p-4 rounded-2xl bg-slate-900/80 hover:bg-slate-800 text-white border border-white/10 hover:border-white/20 shadow-xl backdrop-blur-xl transition-all duration-200 hover:scale-110 active:scale-95 group">
-        <svg class="w-6 h-6 text-slate-300 group-hover:text-white transition-transform group-hover:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" />
-        </svg>
-      </button>
+          <!-- ================= CARD 1: CHALLENGE 1 (Smart Home) ================= -->
+          <article class="slide-item bg-white rounded-2xl border border-zinc-200/80 shadow-xs hover:border-zinc-300 hover:shadow-md transition-all duration-200 flex flex-col justify-between overflow-hidden group">
+            <div>
+              <!-- Visual Image / Cover -->
+              <div class="h-44 w-full bg-zinc-900 p-6 flex flex-col justify-between relative overflow-hidden">
+                <div class="flex items-center justify-between z-10">
+                  <span class="text-[11px] font-mono font-medium text-emerald-400 bg-emerald-950/80 border border-emerald-800/60 px-2 py-0.5 rounded">
+                    CH 01
+                  </span>
+                  <span class="text-[11px] font-medium text-zinc-400">
+                    Semester 1 • Block 1
+                  </span>
+                </div>
 
-    </div>
+                <div class="flex items-center space-x-3 my-auto z-10">
+                  <div class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center border border-white/10 text-emerald-400">
+                    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 class="text-white font-bold text-lg leading-snug">Smart Home</h3>
+                    <p class="text-xs text-zinc-400">IoT & Telemetry</p>
+                  </div>
+                </div>
 
-    <!-- Interactive Navigation Dots & Autoplay Bar -->
-    <div class="flex flex-col items-center space-y-4 pt-2">
-      
-      <!-- Dots indicator -->
-      <div class="flex items-center space-x-3 bg-slate-900/80 border border-white/10 backdrop-blur-xl px-4 py-2 rounded-full shadow-lg" id="dots-container">
-        <button class="dot-indicator h-2.5 rounded-full transition-all duration-300" data-target="0" title="Challenge 1: Smart Home"></button>
-        <button class="dot-indicator h-2.5 rounded-full transition-all duration-300" data-target="1" title="Challenge 2: UniSport"></button>
-        <button class="dot-indicator h-2.5 rounded-full transition-all duration-300" data-target="2" title="Challenge 3: Advanced Systems"></button>
-      </div>
+                <div class="text-[11px] font-mono text-zinc-500 z-10">
+                  Status: Completed
+                </div>
+              </div>
 
-      <!-- Autoplay Timer Bar & Keyboard Hint -->
-      <div class="flex items-center gap-4 text-[11px] font-mono text-slate-400 select-none">
-        <span class="hidden sm:inline">Use <kbd class="px-1.5 py-0.5 rounded bg-white/10 text-slate-300">&larr;</kbd> <kbd class="px-1.5 py-0.5 rounded bg-white/10 text-slate-300">&rarr;</kbd> or drag</span>
-        <span class="hidden sm:inline">•</span>
-        <div class="w-24 h-1 bg-white/10 rounded-full overflow-hidden">
-          <div id="autoplay-progress" class="progress-bar-fill h-full bg-indigo-500 w-0"></div>
+              <!-- Card Body -->
+              <div class="p-6 space-y-2.5">
+                <h2 class="text-lg font-bold text-zinc-900 group-hover:text-zinc-700 transition">
+                  Smart Home Automation
+                </h2>
+                <p class="text-sm text-zinc-500 leading-relaxed">
+                  IoT smart home ecosystem exploring home automation, sensor telemetry, and embedded system architecture.
+                </p>
+              </div>
+            </div>
+
+            <!-- Card Action Link -->
+            <div class="p-6 pt-0">
+              <a href="https://github.com/martimgalamba7/Smart-Home" target="_blank" rel="noopener noreferrer" class="w-full inline-flex items-center justify-between py-2.5 px-4 rounded-xl bg-zinc-100 hover:bg-zinc-200 text-zinc-900 font-semibold text-xs sm:text-sm transition group/link">
+                <span>View on GitHub</span>
+                <span class="text-zinc-400 group-hover/link:text-zinc-900 group-hover/link:translate-x-0.5 transition-all">&rarr;</span>
+              </a>
+            </div>
+          </article>
+
+          <!-- ================= CARD 2: CHALLENGE 2 (UniSport) ================= -->
+          <article class="slide-item bg-white rounded-2xl border-2 border-indigo-600/30 shadow-sm hover:border-indigo-600 hover:shadow-lg transition-all duration-200 flex flex-col justify-between overflow-hidden group relative">
+            <div>
+              <!-- Visual Image / Cover -->
+              <div class="h-44 w-full bg-slate-950 p-6 flex flex-col justify-between relative overflow-hidden">
+                <div class="flex items-center justify-between z-10">
+                  <span class="text-[11px] font-mono font-bold text-white bg-indigo-600 px-2 py-0.5 rounded">
+                    CH 02 • ACTIVE
+                  </span>
+                  <span class="text-[11px] font-medium text-zinc-400">
+                    Semester 1 • Block 2
+                  </span>
+                </div>
+
+                <div class="flex items-center space-x-3 my-auto z-10">
+                  <img src="./assets/logoUniSport.png" alt="UniSport" class="h-10 w-auto object-contain" onerror="this.src='/assets/logoUniSport.png';" />
+                  <img src="./assets/lettersUniSport.png" alt="UniSport" class="h-5 w-auto object-contain brightness-0 invert opacity-90" onerror="this.src='/assets/lettersUniSport.png';" />
+                </div>
+
+                <div class="text-[11px] font-mono text-indigo-400 z-10">
+                  Live Platform & Research
+                </div>
+              </div>
+
+              <!-- Card Body -->
+              <div class="p-6 space-y-2.5">
+                <h2 class="text-lg font-bold text-zinc-900 group-hover:text-indigo-600 transition">
+                  UniSport Platform
+                </h2>
+                <p class="text-sm text-zinc-500 leading-relaxed">
+                  Sports community web platform and empirical academic research study examining university athletic engagement and social networking.
+                </p>
+              </div>
+            </div>
+
+            <!-- Card Action Link -->
+            <div class="p-6 pt-0">
+              <a href="https://fontysict.martimgalamba7.xyz/challenge2" class="w-full inline-flex items-center justify-between py-2.5 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs sm:text-sm transition shadow-sm shadow-indigo-500/20 group/link">
+                <span>Open Challenge 2</span>
+                <span class="text-indigo-200 group-hover/link:text-white group-hover/link:translate-x-0.5 transition-all">&rarr;</span>
+              </a>
+            </div>
+          </article>
+
+          <!-- ================= CARD 3: CHALLENGE 3 (Upcoming) ================= -->
+          <article class="slide-item bg-white rounded-2xl border border-dashed border-zinc-300 shadow-xs flex flex-col justify-between overflow-hidden">
+            <div>
+              <!-- Visual Image / Cover -->
+              <div class="h-44 w-full bg-zinc-50 border-b border-zinc-100 p-6 flex flex-col justify-between relative">
+                <div class="flex items-center justify-between">
+                  <span class="text-[11px] font-mono text-zinc-400 bg-zinc-200/70 px-2 py-0.5 rounded">
+                    CH 03
+                  </span>
+                  <span class="text-[11px] font-medium text-zinc-400">
+                    Semester 2 • Block 3
+                  </span>
+                </div>
+
+                <div class="my-auto">
+                  <div class="text-2xl font-black text-zinc-300">Challenge 3</div>
+                  <div class="text-xs text-zinc-400">Future Project</div>
+                </div>
+
+                <div class="text-[11px] font-mono text-zinc-400">
+                  Status: In Planning
+                </div>
+              </div>
+
+              <!-- Card Body -->
+              <div class="p-6 space-y-2.5">
+                <h2 class="text-lg font-bold text-zinc-700">
+                  Upcoming Challenge
+                </h2>
+                <p class="text-sm text-zinc-400 leading-relaxed">
+                  Next stage practical development and advanced semester coursework. Coming soon upon semester commencement.
+                </p>
+              </div>
+            </div>
+
+            <!-- Card Action Link -->
+            <div class="p-6 pt-0">
+              <span class="w-full inline-flex items-center justify-center py-2.5 px-4 rounded-xl bg-zinc-50 border border-zinc-200 text-zinc-400 font-medium text-xs sm:text-sm cursor-not-allowed">
+                Coming Soon
+              </span>
+            </div>
+          </article>
+
         </div>
       </div>
 
@@ -423,195 +263,67 @@
   </main>
 
   <!-- ================= FOOTER ================= -->
-  <footer class="w-full relative z-30 border-t border-white/[0.07] bg-slate-950/70 backdrop-blur-xl py-6 sm:py-8 mt-auto">
-    <div class="w-full max-w-[1700px] ultra-fluid-container mx-auto px-6 sm:px-10 lg:px-16 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs sm:text-sm text-slate-400">
-      <span class="font-medium text-slate-300">Martim Ferreira Galamba</span>
-      <span class="text-slate-400">Fontys University of Applied Sciences • Fontys ICT</span>
+  <footer class="w-full border-t border-zinc-200/80 bg-white py-6 mt-12">
+    <div class="max-w-6xl mx-auto px-6 sm:px-10 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs sm:text-sm text-zinc-500">
+      <span class="font-medium text-zinc-800">Martim Ferreira Galamba</span>
+      <span class="text-zinc-500">Fontys University of Applied Sciences • Fontys ICT</span>
     </div>
   </footer>
 
-  <!-- ================= CAROUSEL & INTERACTIVE LOGIC ================= -->
+  <!-- ================= MINIMAL CAROUSEL LOGIC ================= -->
   <script>
     (function() {
-      const cards = Array.from(document.querySelectorAll('.project-card'));
-      const dots = Array.from(document.querySelectorAll('.dot-indicator'));
-      const btnPrev = document.getElementById('btn-prev');
-      const btnNext = document.getElementById('btn-next');
-      const progressBar = document.getElementById('autoplay-progress');
-      const ambientOrb1 = document.getElementById('ambient-orb-1');
-      const ambientOrb2 = document.getElementById('ambient-orb-2');
-      const ambientOrb3 = document.getElementById('ambient-orb-3');
-      const carouselContainer = document.getElementById('carousel-container');
+      const track = document.getElementById('slider-track');
+      const prevBtn = document.getElementById('prev-btn');
+      const nextBtn = document.getElementById('next-btn');
+      const items = document.querySelectorAll('.slide-item');
 
-      let currentIndex = 1; // Default to Challenge 2 (UniSport)
-      const totalCards = cards.length;
-      const AUTOPLAY_DURATION = 6000; // 6 seconds
-      let autoplayTimer = null;
-      let progressInterval = null;
-      let progressStartTime = null;
-      let isPaused = false;
+      let currentOffset = 0;
 
-      // Theme colors for dynamic ambient background
-      const themeColors = {
-        emerald: {
-          orb1: 'rgba(16, 185, 129, 0.25)',
-          orb2: 'rgba(5, 150, 105, 0.18)',
-          orb3: 'rgba(15, 23, 42, 0.5)',
-          progress: '#10b981'
-        },
-        indigo: {
-          orb1: 'rgba(99, 102, 241, 0.28)',
-          orb2: 'rgba(59, 130, 246, 0.20)',
-          orb3: 'rgba(30, 27, 75, 0.6)',
-          progress: '#6366f1'
-        },
-        violet: {
-          orb1: 'rgba(139, 92, 246, 0.25)',
-          orb2: 'rgba(236, 72, 153, 0.18)',
-          orb3: 'rgba(49, 16, 66, 0.5)',
-          progress: '#8b5cf6'
-        }
-      };
-
-      function updateCarousel(newIndex) {
-        currentIndex = (newIndex + totalCards) % totalCards;
-
-        cards.forEach((card, idx) => {
-          card.classList.remove('is-active', 'is-prev', 'is-next', 'is-hidden-left', 'is-hidden-right');
-
-          const diff = (idx - currentIndex + totalCards) % totalCards;
-
-          if (diff === 0) {
-            card.classList.add('is-active');
-          } else if (diff === totalCards - 1 || diff === -1) {
-            card.classList.add('is-prev');
-          } else if (diff === 1) {
-            card.classList.add('is-next');
-          } else if (diff > 1) {
-            card.classList.add('is-hidden-right');
-          } else {
-            card.classList.add('is-hidden-left');
-          }
-        });
-
-        // Update Dots
-        dots.forEach((dot, idx) => {
-          if (idx === currentIndex) {
-            dot.className = 'dot-indicator h-2.5 w-8 rounded-full bg-indigo-500 shadow-md shadow-indigo-500/50 transition-all duration-300';
-          } else {
-            dot.className = 'dot-indicator h-2.5 w-2.5 rounded-full bg-white/20 hover:bg-white/40 transition-all duration-300 cursor-pointer';
-          }
-        });
-
-        // Update Ambient Lighting
-        const activeTheme = cards[currentIndex].dataset.theme || 'indigo';
-        const colors = themeColors[activeTheme] || themeColors.indigo;
-
-        if (ambientOrb1) ambientOrb1.style.backgroundColor = colors.orb1;
-        if (ambientOrb2) ambientOrb2.style.backgroundColor = colors.orb2;
-        if (ambientOrb3) ambientOrb3.style.backgroundColor = colors.orb3;
-        if (progressBar) progressBar.style.backgroundColor = colors.progress;
-
-        resetAutoplay();
+      function getVisibleCount() {
+        if (window.innerWidth >= 1200) return 3;
+        if (window.innerWidth >= 768) return 2;
+        return 1;
       }
 
-      // Autoplay Progress Loop
-      function startAutoplay() {
-        progressStartTime = Date.now();
-        clearInterval(progressInterval);
-        clearTimeout(autoplayTimer);
-
-        progressInterval = setInterval(() => {
-          if (isPaused) return;
-          const elapsed = Date.now() - progressStartTime;
-          const pct = Math.min((elapsed / AUTOPLAY_DURATION) * 100, 100);
-          if (progressBar) progressBar.style.width = pct + '%';
-
-          if (elapsed >= AUTOPLAY_DURATION) {
-            updateCarousel(currentIndex + 1);
-          }
-        }, 30);
+      function updateButtons() {
+        const visible = getVisibleCount();
+        const maxOffset = items.length - visible;
+        
+        prevBtn.disabled = currentOffset <= 0;
+        nextBtn.disabled = currentOffset >= maxOffset || maxOffset <= 0;
       }
 
-      function resetAutoplay() {
-        if (progressBar) progressBar.style.width = '0%';
-        startAutoplay();
+      function slideTo(index) {
+        const visible = getVisibleCount();
+        const maxOffset = Math.max(0, items.length - visible);
+        currentOffset = Math.max(0, Math.min(index, maxOffset));
+
+        const itemWidth = items[0].getBoundingClientRect().width;
+        const gap = 24; // 1.5rem gap
+        const moveAmount = currentOffset * (itemWidth + gap);
+
+        track.style.transform = `translateX(-${moveAmount}px)`;
+        updateButtons();
       }
 
-      // Card click delegation
-      cards.forEach((card, idx) => {
-        card.addEventListener('click', (e) => {
-          // If clicked on an active card button or link, let the link fire
-          if (card.classList.contains('is-active')) return;
-          
-          e.preventDefault();
-          updateCarousel(idx);
-        });
+      prevBtn.addEventListener('click', () => slideTo(currentOffset - 1));
+      nextBtn.addEventListener('click', () => slideTo(currentOffset + 1));
+
+      window.addEventListener('resize', () => {
+        slideTo(currentOffset);
       });
 
-      // Dots Click
-      dots.forEach((dot, idx) => {
-        dot.addEventListener('click', () => updateCarousel(idx));
-      });
-
-      // Arrow Buttons
-      btnPrev.addEventListener('click', () => updateCarousel(currentIndex - 1));
-      btnNext.addEventListener('click', () => updateCarousel(currentIndex + 1));
-
-      // Keyboard Left/Right Navigation
-      window.addEventListener('keydown', (e) => {
-        if (e.key === 'ArrowLeft') updateCarousel(currentIndex - 1);
-        if (e.key === 'ArrowRight') updateCarousel(currentIndex + 1);
-      });
-
-      // Hover Pause
-      carouselContainer.addEventListener('mouseenter', () => { isPaused = true; });
-      carouselContainer.addEventListener('mouseleave', () => { 
-        isPaused = false; 
-        progressStartTime = Date.now() - (parseFloat(progressBar.style.width || 0) / 100) * AUTOPLAY_DURATION;
-      });
-
-      // Touch & Mouse Drag / Swipe
+      // Swipe / Drag Support
       let startX = 0;
-      let isDragging = false;
-
-      carouselContainer.addEventListener('touchstart', (e) => {
-        startX = e.touches[0].clientX;
-        isDragging = true;
-        isPaused = true;
-      }, { passive: true });
-
-      carouselContainer.addEventListener('touchend', (e) => {
-        if (!isDragging) return;
-        const endX = e.changedTouches[0].clientX;
-        const diff = endX - startX;
-        if (Math.abs(diff) > 45) {
-          if (diff > 0) updateCarousel(currentIndex - 1);
-          else updateCarousel(currentIndex + 1);
-        }
-        isDragging = false;
-        isPaused = false;
+      track.addEventListener('touchstart', (e) => { startX = e.touches[0].clientX; }, { passive: true });
+      track.addEventListener('touchend', (e) => {
+        const diff = e.changedTouches[0].clientX - startX;
+        if (diff > 50) slideTo(currentOffset - 1);
+        if (diff < -50) slideTo(currentOffset + 1);
       });
 
-      carouselContainer.addEventListener('mousedown', (e) => {
-        startX = e.clientX;
-        isDragging = true;
-        isPaused = true;
-      });
-
-      window.addEventListener('mouseup', (e) => {
-        if (!isDragging) return;
-        const diff = e.clientX - startX;
-        if (Math.abs(diff) > 55) {
-          if (diff > 0) updateCarousel(currentIndex - 1);
-          else updateCarousel(currentIndex + 1);
-        }
-        isDragging = false;
-        isPaused = false;
-      });
-
-      // Initial Mount
-      updateCarousel(currentIndex);
+      updateButtons();
     })();
   </script>
 
