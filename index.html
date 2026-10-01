@@ -29,6 +29,20 @@
             '3xl': '1920px',
             '4xl': '2560px',
           },
+          animation: {
+            'float-slow': 'floatSlow 9s ease-in-out infinite',
+            'float-reverse': 'floatReverse 11s ease-in-out infinite',
+          },
+          keyframes: {
+            floatSlow: {
+              '0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
+              '50%': { transform: 'translateY(-16px) rotate(4deg)' },
+            },
+            floatReverse: {
+              '0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
+              '50%': { transform: 'translateY(16px) rotate(-4deg)' },
+            },
+          }
         },
       },
     }
@@ -63,8 +77,27 @@
       transform-style: preserve-3d;
     }
 
-    #portfolio-section {
-      will-change: transform, opacity;
+    /* Interactive 3D Card Stage */
+    .card-perspective-stage {
+      perspective: 1200px;
+    }
+    
+    .interactive-card {
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
+      will-change: transform, box-shadow;
+      transform-style: preserve-3d;
+    }
+
+    /* Stagger reveal classes */
+    .reveal-init {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .reveal-active {
+      opacity: 1;
+      transform: translateY(0px);
     }
   </style>
 </head>
@@ -142,7 +175,7 @@
         </svg>
       </div>
 
-      <!-- 10. Layers / Software Architecture (Upper Mid Right) -->
+      <!-- 10. Layers / Architecture (Upper Mid Right) -->
       <div class="absolute top-[20%] right-[25%] text-zinc-900/[0.04] parallax-layer anim-drift-a" data-speed="0.6" data-rot="12">
         <svg class="w-18 h-18 sm:w-24 sm:h-24 lg:w-32 lg:h-32" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
@@ -194,8 +227,8 @@
   <!-- ================= SECTION 2: ACADEMIC PORTFOLIO ================= -->
   <section id="portfolio-section" class="min-h-screen w-full flex flex-col justify-between py-16 sm:py-24 px-6 sm:px-12 lg:px-16 2xl:px-24 max-w-[1800px] mx-auto space-y-12 sm:space-y-16">
     
-    <!-- Title & Description -->
-    <div class="space-y-4 max-w-4xl" id="portfolio-header">
+    <!-- Title & Description (Stagger Reveal) -->
+    <div class="space-y-4 max-w-4xl reveal-init" id="portfolio-header">
       <h2 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-zinc-900 leading-[1.08]">
         Academic Portfolio
       </h2>
@@ -204,8 +237,8 @@
       </p>
     </div>
 
-    <!-- Section Divider -->
-    <div class="space-y-6">
+    <!-- Section Divider (Stagger Reveal) -->
+    <div class="space-y-6 reveal-init" id="portfolio-divider">
       
       <div class="pb-3 border-b border-zinc-200">
         <span class="text-xs font-mono font-semibold text-zinc-400 uppercase tracking-wider">
@@ -213,15 +246,15 @@
         </span>
       </div>
 
-      <!-- Project Cards Grid (2 Columns) -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-10" id="portfolio-cards-grid">
+      <!-- Project Cards Grid (2 Columns with 3D Tilt & Micro-Interactions) -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-10 card-perspective-stage" id="portfolio-cards-grid">
 
         <!-- ================= CARD 1: CHALLENGE 1 (Smart Home) ================= -->
-        <a href="https://github.com/martimgalamba7/Smart-Home" target="_blank" rel="noopener noreferrer" class="group flex flex-col bg-white rounded-3xl border border-zinc-200/80 shadow-xs hover:border-zinc-400 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 overflow-hidden cursor-pointer">
+        <a href="https://github.com/martimgalamba7/Smart-Home" target="_blank" rel="noopener noreferrer" class="interactive-card reveal-init group flex flex-col bg-white rounded-3xl border border-zinc-200/80 shadow-xs hover:border-zinc-400 hover:shadow-2xl transition-all duration-300 overflow-hidden cursor-pointer">
           
-          <!-- Visual Area: Clean house icon centered with no quadratic background -->
+          <!-- Visual Area: Clean house icon centered on solid dark background with smooth hover scale -->
           <div class="h-64 sm:h-72 w-full bg-zinc-950 flex items-center justify-center p-8 relative overflow-hidden">
-            <svg class="w-20 h-20 sm:w-24 sm:h-24 text-zinc-200 group-hover:text-emerald-400 group-hover:scale-110 transition-all duration-300 stroke-[1.5]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg class="w-20 h-20 sm:w-24 sm:h-24 text-zinc-200 group-hover:text-emerald-400 group-hover:scale-110 transition-all duration-400 stroke-[1.5]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
             </svg>
           </div>
@@ -242,7 +275,7 @@
               <span class="font-mono text-xs sm:text-sm text-zinc-400 font-medium">
                 Semester 1 • Challenge 1
               </span>
-              <span class="font-bold text-zinc-900 group-hover:text-emerald-600 transition flex items-center gap-1.5">
+              <span class="font-bold text-zinc-900 group-hover:text-emerald-600 transition-colors flex items-center gap-1.5 group-hover:translate-x-1 duration-200">
                 View Project <span>&rarr;</span>
               </span>
             </div>
@@ -250,17 +283,17 @@
         </a>
 
         <!-- ================= CARD 2: CHALLENGE 2 (UniSport) ================= -->
-        <a href="https://fontysict.martimgalamba7.xyz/challenge2" class="group flex flex-col bg-white rounded-3xl border border-zinc-200/80 shadow-xs hover:border-indigo-500 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 overflow-hidden cursor-pointer relative">
+        <a href="https://fontysict.martimgalamba7.xyz/challenge2" class="interactive-card reveal-init group flex flex-col bg-white rounded-3xl border border-zinc-200/80 shadow-xs hover:border-blue-500 hover:shadow-2xl transition-all duration-300 overflow-hidden cursor-pointer relative">
           
-          <!-- Visual Area: Clean logo letters centered with simple background -->
-          <div class="h-64 sm:h-72 w-full bg-slate-950 flex items-center justify-center p-8 relative overflow-hidden">
-            <img src="./assets/lettersUniSport.png" alt="UniSport" class="h-12 sm:h-16 w-auto max-w-[80%] object-contain brightness-0 invert opacity-95 group-hover:scale-105 transition-transform duration-300" onerror="this.src='/assets/lettersUniSport.png';" />
+          <!-- Visual Area: Clean full-color UniSport logo centered on crisp pure background -->
+          <div class="h-64 sm:h-72 w-full bg-zinc-50 border-b border-zinc-100/80 flex items-center justify-center p-8 relative overflow-hidden">
+            <img src="./assets/lettersUniSport.png" alt="UniSport" class="h-14 sm:h-20 w-auto max-w-[85%] object-contain drop-shadow-sm group-hover:scale-105 transition-transform duration-400" />
           </div>
 
           <!-- Content Area -->
           <div class="p-7 sm:p-8 flex-grow flex flex-col justify-between space-y-6">
             <div class="space-y-3">
-              <h3 class="text-2xl sm:text-3xl font-bold text-zinc-900 group-hover:text-indigo-600 transition-colors">
+              <h3 class="text-2xl sm:text-3xl font-bold text-zinc-900 group-hover:text-blue-600 transition-colors">
                 UniSport Platform
               </h3>
               <p class="text-sm sm:text-base text-zinc-500 leading-relaxed">
@@ -273,7 +306,7 @@
               <span class="font-mono text-xs sm:text-sm text-zinc-400 font-medium">
                 Semester 1 • Challenge 2
               </span>
-              <span class="font-bold text-zinc-900 group-hover:text-indigo-600 transition flex items-center gap-1.5">
+              <span class="font-bold text-zinc-900 group-hover:text-blue-600 transition-colors flex items-center gap-1.5 group-hover:translate-x-1 duration-200">
                 View Project <span>&rarr;</span>
               </span>
             </div>
@@ -294,7 +327,7 @@
 
   </section>
 
-  <!-- ================= HIGH-PERFORMANCE CINEMATIC PARALLAX SCROLL ================= -->
+  <!-- ================= PARALLAX & TACTILE ANIMATIONS ================= -->
   <script>
     (function() {
       const heroSection = document.getElementById('hero-section');
@@ -304,14 +337,16 @@
       const parallaxLayers = Array.from(document.querySelectorAll('.parallax-layer[data-speed]'));
       const btnScrollDown = document.getElementById('btn-scroll-down');
       const portfolioSection = document.getElementById('portfolio-section');
+      const revealElements = Array.from(document.querySelectorAll('.reveal-init'));
+      const cards = Array.from(document.querySelectorAll('.interactive-card'));
 
       // Smooth click-to-scroll button
       btnScrollDown.addEventListener('click', () => {
         portfolioSection.scrollIntoView({ behavior: 'smooth' });
       });
 
+      // 1. Kinetic Parallax on Hero Scroll
       let ticking = false;
-
       function onScroll() {
         if (!ticking) {
           window.requestAnimationFrame(() => {
@@ -326,10 +361,10 @@
         const scrollY = window.scrollY || window.pageYOffset;
         const heroHeight = heroSection.offsetHeight;
 
-        if (scrollY <= heroHeight * 1.2) {
+        if (scrollY <= heroHeight * 1.3) {
           const progress = Math.min(scrollY / heroHeight, 1);
 
-          // 1. Hero Title expansion & cinema depth
+          // Hero Title expansion & cinema depth
           const scale = 1 + progress * 0.22;
           const letterSpacing = (progress * 0.08) + 'em';
           const opacity = Math.max(0, 1 - progress * 1.5);
@@ -343,7 +378,7 @@
             scrollBtnWrap.style.opacity = Math.max(0, 1 - progress * 3);
           }
 
-          // 2. Multi-layer organic floating icons parallax dispersal
+          // Multi-layer organic floating icons parallax dispersal
           parallaxLayers.forEach((layer) => {
             const speed = parseFloat(layer.dataset.speed || 0.5);
             const rot = parseFloat(layer.dataset.rot || 0);
@@ -357,21 +392,55 @@
             layer.style.transform = `translate3d(${moveX}px, ${moveY}px, 0) rotate(${currentRot}deg) scale(${scaleDown})`;
             layer.style.opacity = fadeOut;
           });
-
-          // 3. Smooth reveal for Academic Portfolio
-          if (progress > 0.1) {
-            const revealProgress = Math.min((progress - 0.1) / 0.9, 1);
-            portfolioSection.style.opacity = 0.2 + revealProgress * 0.8;
-            portfolioSection.style.transform = `translate3d(0, ${(1 - revealProgress) * 35}px, 0)`;
-          } else {
-            portfolioSection.style.opacity = 1;
-            portfolioSection.style.transform = `translate3d(0, 0, 0)`;
-          }
         }
       }
 
       window.addEventListener('scroll', onScroll, { passive: true });
       updateParallax();
+
+      // 2. IntersectionObserver for Academic Portfolio Section Reveal
+      const observerOptions = {
+        threshold: 0.12,
+        rootMargin: '0px 0px -40px 0px'
+      };
+
+      const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry, idx) => {
+          if (entry.isIntersecting) {
+            // Stagger animation
+            setTimeout(() => {
+              entry.target.classList.add('reveal-active');
+            }, idx * 120);
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      }, observerOptions);
+
+      revealElements.forEach((el) => revealObserver.observe(el));
+
+      // 3. Subtle 3D Magnetic Micro-Tilt on Cards
+      cards.forEach((card) => {
+        card.addEventListener('mousemove', (e) => {
+          const rect = card.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          
+          const centerX = rect.width / 2;
+          const centerY = rect.height / 2;
+          
+          const deltaX = (x - centerX) / centerX;
+          const deltaY = (y - centerY) / centerY;
+          
+          const rotateX = -deltaY * 4; // Max 4deg tilt
+          const rotateY = deltaX * 4;
+          
+          card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-6px)`;
+        });
+
+        card.addEventListener('mouseleave', () => {
+          card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px)';
+        });
+      });
     })();
   </script>
 
