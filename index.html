@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="h-full bg-[#fafafa] text-zinc-900 antialiased selection:bg-zinc-900 selection:text-white">
+<html lang="en" class="h-full bg-[#fbfbfb] text-zinc-900 antialiased selection:bg-zinc-900 selection:text-white">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -12,7 +12,7 @@
   <!-- Inter & Mono Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -21,241 +21,235 @@
       theme: {
         extend: {
           fontFamily: {
-            sans: ['Inter', 'system-ui', 'sans-serif'],
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
             mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          screens: {
+            '2xl': '1536px',
+            '3xl': '1920px',
+            '4xl': '2560px',
           },
         },
       },
     }
   </script>
-
-  <style>
-    /* Smooth card transitions */
-    .slider-track {
-      display: flex;
-      gap: 1.5rem;
-      transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
-      scroll-snap-type: x mandatory;
-    }
-    .slide-item {
-      scroll-snap-align: start;
-      flex: 0 0 calc(100% - 0rem);
-    }
-    @media (min-width: 768px) {
-      .slide-item {
-        flex: 0 0 calc(50% - 0.75rem);
-      }
-    }
-    @media (min-width: 1200px) {
-      .slide-item {
-        flex: 0 0 calc(33.333% - 1rem);
-      }
-    }
-  </style>
 </head>
 
-<body class="min-h-screen flex flex-col justify-between font-sans bg-[#fafafa] text-zinc-900">
+<body class="min-h-screen flex flex-col justify-between font-sans bg-[#fbfbfb] text-zinc-900">
 
   <!-- ================= TOP HEADER ================= -->
-  <header class="w-full border-b border-zinc-200/80 bg-white/80 backdrop-blur-md sticky top-0 z-40">
-    <div class="max-w-6xl mx-auto px-6 sm:px-10 h-16 sm:h-20 flex items-center justify-between">
+  <header class="w-full border-b border-zinc-200/70 bg-[#fbfbfb]/80 backdrop-blur-md sticky top-0 z-40">
+    <div class="w-full max-w-[1800px] mx-auto px-6 sm:px-12 lg:px-16 2xl:px-24 h-20 sm:h-24 flex items-center justify-between">
       
-      <!-- Breadcrumb Path ("cd" style) -->
+      <!-- Breadcrumb ("cd" path) -->
       <nav aria-label="Breadcrumb" class="flex items-center space-x-2 text-xs sm:text-sm font-mono text-zinc-500">
         <span class="text-zinc-400">fontys</span>
         <span class="text-zinc-300">/</span>
-        <span class="text-zinc-600 font-medium">martimgalamba</span>
+        <span class="text-zinc-700 font-medium hover:text-zinc-900 transition">martimgalamba</span>
         <span class="text-zinc-300">/</span>
-        <span class="text-zinc-900 font-semibold">projects</span>
+        <span class="text-zinc-900 font-semibold bg-zinc-200/60 px-2 py-0.5 rounded text-xs">projects</span>
       </nav>
 
       <!-- Fontys Logo -->
       <a href="https://www.fontys.nl/" target="_blank" rel="noopener noreferrer" title="Fontys University of Applied Sciences" class="hover:opacity-75 transition-opacity">
-        <img src="./assets/logoFontys.png" alt="Fontys" class="h-7 sm:h-8 w-auto object-contain" onerror="this.src='/assets/logoFontys.png';" />
+        <img src="./assets/logoFontys.png" alt="Fontys" class="h-8 sm:h-9 w-auto object-contain" onerror="this.src='/assets/logoFontys.png';" />
       </a>
 
     </div>
   </header>
 
   <!-- ================= MAIN CONTENT ================= -->
-  <main class="w-full flex-grow max-w-6xl mx-auto px-6 sm:px-10 py-12 sm:py-20 flex flex-col justify-center space-y-12 sm:space-y-16">
+  <main class="w-full flex-grow max-w-[1800px] mx-auto px-6 sm:px-12 lg:px-16 2xl:px-24 py-12 sm:py-20 flex flex-col justify-center space-y-12 sm:space-y-16">
     
     <!-- Hero Section -->
-    <div class="max-w-2xl space-y-4">
-      <h1 class="text-3xl sm:text-4xl sm:leading-tight font-extrabold tracking-tight text-zinc-900">
+    <div class="space-y-4 max-w-4xl">
+      <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-zinc-900 leading-[1.08]">
         Academic Portfolio
       </h1>
-      <p class="text-base sm:text-lg text-zinc-500 leading-relaxed font-normal">
-        A showcase of engineering challenges, applied software systems, and empirical research developed throughout my Bachelor of ICT at Fontys University of Applied Sciences.
+      <p class="text-lg sm:text-xl lg:text-2xl text-zinc-500 leading-relaxed font-normal max-w-3xl">
+        A showcase of challenges developed throughout my Bachelor of ICT at Fontys University of Applied Sciences.
       </p>
     </div>
 
-    <!-- Projects Gallery / Carousel Area -->
+    <!-- Section Heading -->
     <div class="space-y-6">
       
-      <!-- Carousel Header Controls (Arrows & Counter) -->
-      <div class="flex items-center justify-between pb-2 border-b border-zinc-200/60">
-        <div class="text-xs font-mono text-zinc-400 uppercase tracking-wider">
-          Semester 1 Projects &bull; 03 Items
-        </div>
-        
-        <div class="flex items-center space-x-2">
-          <button id="prev-btn" aria-label="Previous project" class="p-2 rounded-lg border border-zinc-200 bg-white hover:bg-zinc-100 text-zinc-700 transition disabled:opacity-30 disabled:cursor-not-allowed">
-            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-            </svg>
-          </button>
-          <button id="next-btn" aria-label="Next project" class="p-2 rounded-lg border border-zinc-200 bg-white hover:bg-zinc-100 text-zinc-700 transition disabled:opacity-30 disabled:cursor-not-allowed">
-            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-            </svg>
-          </button>
-        </div>
+      <div class="flex items-center justify-between pb-3 border-b border-zinc-200">
+        <span class="text-xs font-mono font-semibold text-zinc-400 uppercase tracking-wider">
+          Semester 1 Projects
+        </span>
       </div>
 
-      <!-- Slider Stage -->
-      <div class="overflow-hidden relative" id="slider-container">
-        <div class="slider-track" id="slider-track">
+      <!-- Project Cards Grid (Generous & High-Impact) -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10">
 
-          <!-- ================= CARD 1: CHALLENGE 1 (Smart Home) ================= -->
-          <article class="slide-item bg-white rounded-2xl border border-zinc-200/80 shadow-xs hover:border-zinc-300 hover:shadow-md transition-all duration-200 flex flex-col justify-between overflow-hidden group">
-            <div>
-              <!-- Visual Image / Cover -->
-              <div class="h-44 w-full bg-zinc-900 p-6 flex flex-col justify-between relative overflow-hidden">
-                <div class="flex items-center justify-between z-10">
-                  <span class="text-[11px] font-mono font-medium text-emerald-400 bg-emerald-950/80 border border-emerald-800/60 px-2 py-0.5 rounded">
-                    CH 01
-                  </span>
-                  <span class="text-[11px] font-medium text-zinc-400">
-                    Semester 1 • Block 1
-                  </span>
-                </div>
+        <!-- ================= CARD 1: CHALLENGE 1 (Smart Home) ================= -->
+        <a href="https://github.com/martimgalamba7/Smart-Home" target="_blank" rel="noopener noreferrer" class="group flex flex-col bg-white rounded-3xl border border-zinc-200/80 shadow-xs hover:border-zinc-400 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 overflow-hidden cursor-pointer">
+          
+          <!-- Visual Hero Area -->
+          <div class="h-64 sm:h-72 w-full bg-gradient-to-br from-zinc-950 via-zinc-900 to-emerald-950 p-7 flex flex-col justify-between relative overflow-hidden">
+            <!-- Subtle architectural grid pattern -->
+            <div class="absolute inset-0 bg-[radial-gradient(#10b981_1px,transparent_1px)] [background-size:24px_24px] opacity-15"></div>
+            
+            <!-- Top Tag & Badge -->
+            <div class="flex items-center justify-between relative z-10">
+              <span class="text-xs font-mono font-semibold text-emerald-400 bg-emerald-950/80 border border-emerald-800/60 px-2.5 py-1 rounded-full">
+                CH 01
+              </span>
+              <span class="text-xs font-medium text-zinc-400 bg-white/10 backdrop-blur-md px-3 py-1 rounded-full">
+                Semester 1 • Block 1
+              </span>
+            </div>
 
-                <div class="flex items-center space-x-3 my-auto z-10">
-                  <div class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center border border-white/10 text-emerald-400">
-                    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                    </svg>
-                  </div>
-                  <div>
-                    <h3 class="text-white font-bold text-lg leading-snug">Smart Home</h3>
-                    <p class="text-xs text-zinc-400">IoT & Telemetry</p>
-                  </div>
-                </div>
-
-                <div class="text-[11px] font-mono text-zinc-500 z-10">
-                  Status: Completed
-                </div>
+            <!-- Graphic / Logo Centerpiece -->
+            <div class="relative z-10 flex items-center space-x-4 my-auto">
+              <div class="w-14 h-14 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 group-hover:scale-110 transition-transform duration-300">
+                <svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
               </div>
-
-              <!-- Card Body -->
-              <div class="p-6 space-y-2.5">
-                <h2 class="text-lg font-bold text-zinc-900 group-hover:text-zinc-700 transition">
-                  Smart Home Automation
-                </h2>
-                <p class="text-sm text-zinc-500 leading-relaxed">
-                  IoT smart home ecosystem exploring home automation, sensor telemetry, and embedded system architecture.
-                </p>
+              <div>
+                <h3 class="text-white font-bold text-xl leading-tight">Smart Home</h3>
+                <p class="text-xs font-mono text-emerald-400/90 mt-0.5">IoT & Automation Ecosystem</p>
               </div>
             </div>
 
-            <!-- Card Action Link -->
-            <div class="p-6 pt-0">
-              <a href="https://github.com/martimgalamba7/Smart-Home" target="_blank" rel="noopener noreferrer" class="w-full inline-flex items-center justify-between py-2.5 px-4 rounded-xl bg-zinc-100 hover:bg-zinc-200 text-zinc-900 font-semibold text-xs sm:text-sm transition group/link">
-                <span>View on GitHub</span>
-                <span class="text-zinc-400 group-hover/link:text-zinc-900 group-hover/link:translate-x-0.5 transition-all">&rarr;</span>
-              </a>
+            <!-- Bottom Status -->
+            <div class="flex items-center justify-between text-xs font-mono text-zinc-400 relative z-10">
+              <span>Status: Completed</span>
+              <span class="text-emerald-400 font-semibold group-hover:translate-x-1 transition-transform">GitHub ↗</span>
             </div>
-          </article>
+          </div>
 
-          <!-- ================= CARD 2: CHALLENGE 2 (UniSport) ================= -->
-          <article class="slide-item bg-white rounded-2xl border-2 border-indigo-600/30 shadow-sm hover:border-indigo-600 hover:shadow-lg transition-all duration-200 flex flex-col justify-between overflow-hidden group relative">
-            <div>
-              <!-- Visual Image / Cover -->
-              <div class="h-44 w-full bg-slate-950 p-6 flex flex-col justify-between relative overflow-hidden">
-                <div class="flex items-center justify-between z-10">
-                  <span class="text-[11px] font-mono font-bold text-white bg-indigo-600 px-2 py-0.5 rounded">
-                    CH 02 • ACTIVE
-                  </span>
-                  <span class="text-[11px] font-medium text-zinc-400">
-                    Semester 1 • Block 2
-                  </span>
-                </div>
-
-                <div class="flex items-center space-x-3 my-auto z-10">
-                  <img src="./assets/logoUniSport.png" alt="UniSport" class="h-10 w-auto object-contain" onerror="this.src='/assets/logoUniSport.png';" />
-                  <img src="./assets/lettersUniSport.png" alt="UniSport" class="h-5 w-auto object-contain brightness-0 invert opacity-90" onerror="this.src='/assets/lettersUniSport.png';" />
-                </div>
-
-                <div class="text-[11px] font-mono text-indigo-400 z-10">
-                  Live Platform & Research
-                </div>
-              </div>
-
-              <!-- Card Body -->
-              <div class="p-6 space-y-2.5">
-                <h2 class="text-lg font-bold text-zinc-900 group-hover:text-indigo-600 transition">
-                  UniSport Platform
-                </h2>
-                <p class="text-sm text-zinc-500 leading-relaxed">
-                  Sports community web platform and empirical academic research study examining university athletic engagement and social networking.
-                </p>
-              </div>
+          <!-- Content Details -->
+          <div class="p-7 sm:p-8 flex-grow flex flex-col justify-between space-y-6">
+            <div class="space-y-3">
+              <h2 class="text-2xl font-bold text-zinc-900 group-hover:text-emerald-600 transition-colors">
+                Smart Home Automation
+              </h2>
+              <p class="text-sm sm:text-base text-zinc-500 leading-relaxed">
+                IoT smart home ecosystem exploring home automation, sensor telemetry, and embedded system architecture.
+              </p>
             </div>
 
-            <!-- Card Action Link -->
-            <div class="p-6 pt-0">
-              <a href="https://fontysict.martimgalamba7.xyz/challenge2" class="w-full inline-flex items-center justify-between py-2.5 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs sm:text-sm transition shadow-sm shadow-indigo-500/20 group/link">
-                <span>Open Challenge 2</span>
-                <span class="text-indigo-200 group-hover/link:text-white group-hover/link:translate-x-0.5 transition-all">&rarr;</span>
-              </a>
+            <!-- Tags & Action -->
+            <div class="flex items-center justify-between pt-2 border-t border-zinc-100">
+              <div class="flex flex-wrap gap-2">
+                <span class="px-2.5 py-1 rounded-md text-xs font-medium bg-zinc-100 text-zinc-600">IoT</span>
+                <span class="px-2.5 py-1 rounded-md text-xs font-medium bg-zinc-100 text-zinc-600">Telemetry</span>
+                <span class="px-2.5 py-1 rounded-md text-xs font-medium bg-zinc-100 text-zinc-600">Hardware</span>
+              </div>
+              <span class="text-sm font-bold text-zinc-900 group-hover:text-emerald-600 transition flex items-center gap-1">
+                View Project <span>&rarr;</span>
+              </span>
             </div>
-          </article>
+          </div>
+        </a>
 
-          <!-- ================= CARD 3: CHALLENGE 3 (Upcoming) ================= -->
-          <article class="slide-item bg-white rounded-2xl border border-dashed border-zinc-300 shadow-xs flex flex-col justify-between overflow-hidden">
-            <div>
-              <!-- Visual Image / Cover -->
-              <div class="h-44 w-full bg-zinc-50 border-b border-zinc-100 p-6 flex flex-col justify-between relative">
-                <div class="flex items-center justify-between">
-                  <span class="text-[11px] font-mono text-zinc-400 bg-zinc-200/70 px-2 py-0.5 rounded">
-                    CH 03
-                  </span>
-                  <span class="text-[11px] font-medium text-zinc-400">
-                    Semester 2 • Block 3
-                  </span>
-                </div>
-
-                <div class="my-auto">
-                  <div class="text-2xl font-black text-zinc-300">Challenge 3</div>
-                  <div class="text-xs text-zinc-400">Future Project</div>
-                </div>
-
-                <div class="text-[11px] font-mono text-zinc-400">
-                  Status: In Planning
-                </div>
-              </div>
-
-              <!-- Card Body -->
-              <div class="p-6 space-y-2.5">
-                <h2 class="text-lg font-bold text-zinc-700">
-                  Upcoming Challenge
-                </h2>
-                <p class="text-sm text-zinc-400 leading-relaxed">
-                  Next stage practical development and advanced semester coursework. Coming soon upon semester commencement.
-                </p>
-              </div>
+        <!-- ================= CARD 2: CHALLENGE 2 (UniSport • Active) ================= -->
+        <a href="https://fontysict.martimgalamba7.xyz/challenge2" class="group flex flex-col bg-white rounded-3xl border-2 border-indigo-600/30 shadow-sm hover:border-indigo-600 hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-300 overflow-hidden cursor-pointer relative">
+          
+          <!-- Visual Hero Area -->
+          <div class="h-64 sm:h-72 w-full bg-gradient-to-br from-indigo-950 via-slate-950 to-blue-950 p-7 flex flex-col justify-between relative overflow-hidden">
+            <!-- Subtle athletic mesh pattern -->
+            <div class="absolute inset-0 bg-[radial-gradient(#6366f1_1px,transparent_1px)] [background-size:24px_24px] opacity-25"></div>
+            
+            <!-- Top Tag & Badge -->
+            <div class="flex items-center justify-between relative z-10">
+              <span class="text-xs font-mono font-bold text-white bg-indigo-600 px-3 py-1 rounded-full shadow-xs flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full bg-white animate-pulse"></span>
+                CH 02 • ACTIVE
+              </span>
+              <span class="text-xs font-medium text-zinc-300 bg-white/10 backdrop-blur-md px-3 py-1 rounded-full">
+                Semester 1 • Block 2
+              </span>
             </div>
 
-            <!-- Card Action Link -->
-            <div class="p-6 pt-0">
-              <span class="w-full inline-flex items-center justify-center py-2.5 px-4 rounded-xl bg-zinc-50 border border-zinc-200 text-zinc-400 font-medium text-xs sm:text-sm cursor-not-allowed">
+            <!-- Graphic / Logo Centerpiece -->
+            <div class="relative z-10 flex flex-col items-center justify-center my-auto space-y-2 group-hover:scale-105 transition-transform duration-300">
+              <img src="./assets/logoUniSport.png" alt="UniSport Icon" class="h-14 sm:h-16 w-auto object-contain drop-shadow-md" onerror="this.src='/assets/logoUniSport.png';" />
+              <img src="./assets/lettersUniSport.png" alt="UniSport" class="h-5 sm:h-6 w-auto object-contain brightness-0 invert opacity-95" onerror="this.src='/assets/lettersUniSport.png';" />
+            </div>
+
+            <!-- Bottom Status -->
+            <div class="flex items-center justify-between text-xs font-mono text-zinc-300 relative z-10">
+              <span>Live Platform & Academic Study</span>
+              <span class="text-indigo-300 font-semibold group-hover:translate-x-1 transition-transform">Live Demo ↗</span>
+            </div>
+          </div>
+
+          <!-- Content Details -->
+          <div class="p-7 sm:p-8 flex-grow flex flex-col justify-between space-y-6">
+            <div class="space-y-3">
+              <h2 class="text-2xl font-bold text-zinc-900 group-hover:text-indigo-600 transition-colors">
+                UniSport Platform
+              </h2>
+              <p class="text-sm sm:text-base text-zinc-500 leading-relaxed">
+                Sports community web platform and empirical academic research study examining university athletic engagement and social networking.
+              </p>
+            </div>
+
+            <!-- Tags & Action -->
+            <div class="flex items-center justify-between pt-2 border-t border-zinc-100">
+              <div class="flex flex-wrap gap-2">
+                <span class="px-2.5 py-1 rounded-md text-xs font-medium bg-indigo-50 text-indigo-700">Full-Stack</span>
+                <span class="px-2.5 py-1 rounded-md text-xs font-medium bg-indigo-50 text-indigo-700">Research</span>
+                <span class="px-2.5 py-1 rounded-md text-xs font-medium bg-indigo-50 text-indigo-700">Community</span>
+              </div>
+              <span class="text-sm font-bold text-indigo-600 transition flex items-center gap-1">
+                Open Platform <span>&rarr;</span>
+              </span>
+            </div>
+          </div>
+        </a>
+
+        <!-- ================= CARD 3: CHALLENGE 3 (Upcoming) ================= -->
+        <div class="flex flex-col bg-white rounded-3xl border border-dashed border-zinc-300 shadow-xs overflow-hidden opacity-90">
+          
+          <!-- Visual Hero Area -->
+          <div class="h-64 sm:h-72 w-full bg-zinc-50 border-b border-zinc-100 p-7 flex flex-col justify-between relative">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-mono text-zinc-400 bg-zinc-200/80 px-2.5 py-1 rounded-full">
+                CH 03
+              </span>
+              <span class="text-xs font-medium text-zinc-400">
+                Semester 2 • Block 3
+              </span>
+            </div>
+
+            <div class="my-auto text-center space-y-1">
+              <div class="text-3xl font-black text-zinc-300 tracking-tight">Challenge 3</div>
+              <div class="text-xs font-mono text-zinc-400 uppercase tracking-wider">Advanced ICT Coursework</div>
+            </div>
+
+            <div class="text-xs font-mono text-zinc-400">
+              Status: In Planning
+            </div>
+          </div>
+
+          <!-- Content Details -->
+          <div class="p-7 sm:p-8 flex-grow flex flex-col justify-between space-y-6">
+            <div class="space-y-3">
+              <h2 class="text-2xl font-bold text-zinc-700">
+                Upcoming Challenge
+              </h2>
+              <p class="text-sm sm:text-base text-zinc-400 leading-relaxed">
+                Next stage practical development and advanced semester coursework. Coming soon upon semester commencement.
+              </p>
+            </div>
+
+            <!-- Tags & Status -->
+            <div class="flex items-center justify-between pt-2 border-t border-zinc-100">
+              <div class="flex flex-wrap gap-2">
+                <span class="px-2.5 py-1 rounded-md text-xs font-medium bg-zinc-100 text-zinc-400">Semester 2</span>
+              </div>
+              <span class="text-xs font-mono font-medium text-zinc-400 uppercase tracking-wider">
                 Coming Soon
               </span>
             </div>
-          </article>
-
+          </div>
         </div>
+
       </div>
 
     </div>
@@ -263,69 +257,12 @@
   </main>
 
   <!-- ================= FOOTER ================= -->
-  <footer class="w-full border-t border-zinc-200/80 bg-white py-6 mt-12">
-    <div class="max-w-6xl mx-auto px-6 sm:px-10 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs sm:text-sm text-zinc-500">
+  <footer class="w-full border-t border-zinc-200/80 bg-white py-8 mt-16">
+    <div class="w-full max-w-[1800px] mx-auto px-6 sm:px-12 lg:px-16 2xl:px-24 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs sm:text-sm text-zinc-500">
       <span class="font-medium text-zinc-800">Martim Ferreira Galamba</span>
       <span class="text-zinc-500">Fontys University of Applied Sciences • Fontys ICT</span>
     </div>
   </footer>
-
-  <!-- ================= MINIMAL CAROUSEL LOGIC ================= -->
-  <script>
-    (function() {
-      const track = document.getElementById('slider-track');
-      const prevBtn = document.getElementById('prev-btn');
-      const nextBtn = document.getElementById('next-btn');
-      const items = document.querySelectorAll('.slide-item');
-
-      let currentOffset = 0;
-
-      function getVisibleCount() {
-        if (window.innerWidth >= 1200) return 3;
-        if (window.innerWidth >= 768) return 2;
-        return 1;
-      }
-
-      function updateButtons() {
-        const visible = getVisibleCount();
-        const maxOffset = items.length - visible;
-        
-        prevBtn.disabled = currentOffset <= 0;
-        nextBtn.disabled = currentOffset >= maxOffset || maxOffset <= 0;
-      }
-
-      function slideTo(index) {
-        const visible = getVisibleCount();
-        const maxOffset = Math.max(0, items.length - visible);
-        currentOffset = Math.max(0, Math.min(index, maxOffset));
-
-        const itemWidth = items[0].getBoundingClientRect().width;
-        const gap = 24; // 1.5rem gap
-        const moveAmount = currentOffset * (itemWidth + gap);
-
-        track.style.transform = `translateX(-${moveAmount}px)`;
-        updateButtons();
-      }
-
-      prevBtn.addEventListener('click', () => slideTo(currentOffset - 1));
-      nextBtn.addEventListener('click', () => slideTo(currentOffset + 1));
-
-      window.addEventListener('resize', () => {
-        slideTo(currentOffset);
-      });
-
-      // Swipe / Drag Support
-      let startX = 0;
-      track.addEventListener('touchstart', (e) => { startX = e.touches[0].clientX; }, { passive: true });
-      track.addEventListener('touchend', (e) => {
-        const diff = e.changedTouches[0].clientX - startX;
-        if (diff > 50) slideTo(currentOffset - 1);
-        if (diff < -50) slideTo(currentOffset + 1);
-      });
-
-      updateButtons();
-    })();
-  </script>
 
 </body>
 </html>
