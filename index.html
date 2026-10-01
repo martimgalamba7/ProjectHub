@@ -49,6 +49,32 @@
   </script>
 
   <style>
+    /* ----------------------------------------------------
+       Design Engineering Polish (make-interfaces-feel-better)
+       - Antialiased font smoothing
+       - Balanced typography & tabular numbers
+       - Concentric border radii & layered depth shadows
+       - Interruptible tactile spring transitions (cubic-bezier)
+       - Optical alignment & subtle 1px outlines
+    ---------------------------------------------------- */
+    :root {
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+    }
+
+    h1, h2, h3, h4 {
+      text-wrap: balance;
+    }
+
+    p {
+      text-wrap: pretty;
+    }
+
+    .tabular-numbers {
+      font-variant-numeric: tabular-nums;
+    }
+
     /* Continuous floating micro-animations */
     @keyframes driftA {
       0%, 100% { transform: translateY(0px) rotate(0deg); }
@@ -77,27 +103,50 @@
       transform-style: preserve-3d;
     }
 
-    /* Interactive 3D Card Stage */
+    /* Interactive 3D Card Stage & Tactile Layering */
     .card-perspective-stage {
       perspective: 1200px;
     }
     
     .interactive-card {
-      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
+      /* Concentric radius, multi-layer soft shadows & interruptible spring curve */
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03), 0 4px 14px rgba(0, 0, 0, 0.04);
+      transition: transform 0.35s cubic-bezier(0.2, 0, 0, 1), 
+                  box-shadow 0.35s cubic-bezier(0.2, 0, 0, 1), 
+                  border-color 0.25s cubic-bezier(0.2, 0, 0, 1);
       will-change: transform, box-shadow;
       transform-style: preserve-3d;
+    }
+
+    .interactive-card:hover {
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.04), 
+                  0 20px 35px -4px rgba(0, 0, 0, 0.08), 
+                  0 0 0 1px rgba(0, 0, 0, 0.04);
+    }
+
+    .interactive-card:active {
+      transform: scale(0.98) !important;
+      transition-duration: 0.15s;
     }
 
     /* Stagger reveal classes */
     .reveal-init {
       opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      transform: translateY(24px);
+      transition: opacity 0.7s cubic-bezier(0.2, 0, 0, 1), transform 0.7s cubic-bezier(0.2, 0, 0, 1);
     }
 
     .reveal-active {
       opacity: 1;
       transform: translateY(0px);
+    }
+
+    /* Tactile press feedback helper */
+    .tactile-btn {
+      transition: transform 0.15s cubic-bezier(0.2, 0, 0, 1), opacity 0.15s ease;
+    }
+    .tactile-btn:active {
+      transform: scale(0.96);
     }
   </style>
 </head>
@@ -188,17 +237,17 @@
     <header class="w-full relative z-20">
       <div class="w-full max-w-[1800px] mx-auto px-6 sm:px-12 lg:px-16 2xl:px-24 h-20 sm:h-24 flex items-center justify-between">
         
-        <!-- Breadcrumb ("cd" path) -->
-        <nav aria-label="Breadcrumb" class="flex items-center space-x-2 text-xs sm:text-sm font-mono text-zinc-500">
+        <!-- Breadcrumb ("cd" path) with tactile click -->
+        <nav aria-label="Breadcrumb" class="flex items-center space-x-2 text-xs sm:text-sm font-mono text-zinc-500 tabular-numbers">
           <span class="text-zinc-400">fontys</span>
           <span class="text-zinc-300">/</span>
           <span class="text-zinc-700 font-medium">martimgalamba</span>
           <span class="text-zinc-300">/</span>
-          <span class="text-zinc-900 font-semibold bg-zinc-200/60 px-2 py-0.5 rounded text-xs">projects</span>
+          <span class="text-zinc-900 font-semibold bg-zinc-200/60 px-2 py-0.5 rounded-[6px] text-xs">projects</span>
         </nav>
 
-        <!-- Fontys Logo -->
-        <a href="https://www.fontys.nl/" target="_blank" rel="noopener noreferrer" title="Fontys University of Applied Sciences" class="hover:opacity-75 transition-opacity">
+        <!-- Fontys Logo with tactile click -->
+        <a href="https://www.fontys.nl/" target="_blank" rel="noopener noreferrer" title="Fontys University of Applied Sciences" class="tactile-btn hover:opacity-80 transition-opacity">
           <img src="./assets/logoFontys.png" alt="Fontys" class="h-8 sm:h-9 w-auto object-contain" onerror="this.src='/assets/logoFontys.png';" />
         </a>
 
@@ -212,11 +261,11 @@
       </h1>
     </div>
 
-    <!-- Bottom Scroll Button with Click & Scroll Animation -->
+    <!-- Bottom Scroll Button with Click & Scroll Animation & Tactile Feedback -->
     <div id="hero-scroll-btn-wrap" class="w-full flex items-center justify-center pb-8 sm:pb-10 relative z-20">
-      <button id="btn-scroll-down" aria-label="Scroll to Portfolio" class="inline-flex flex-col items-center space-y-2.5 text-xs font-mono text-zinc-400 hover:text-zinc-900 transition-colors group cursor-pointer">
+      <button id="btn-scroll-down" aria-label="Scroll to Portfolio" class="tactile-btn inline-flex flex-col items-center space-y-2.5 text-xs font-mono text-zinc-400 hover:text-zinc-900 transition-colors group cursor-pointer">
         <span class="tracking-widest uppercase text-[11px] font-medium text-zinc-400 group-hover:text-zinc-800 transition">Scroll to Explore</span>
-        <div class="w-5 h-9 rounded-full border border-zinc-300 flex items-start justify-center p-1 group-hover:border-zinc-800 transition">
+        <div class="w-5 h-9 rounded-full border border-zinc-300/80 flex items-start justify-center p-1 group-hover:border-zinc-800 transition">
           <div class="w-1 h-2 bg-zinc-800 rounded-full animate-bounce"></div>
         </div>
       </button>
@@ -240,21 +289,21 @@
     <!-- Section Divider (Stagger Reveal) -->
     <div class="space-y-6 reveal-init" id="portfolio-divider">
       
-      <div class="pb-3 border-b border-zinc-200">
-        <span class="text-xs font-mono font-semibold text-zinc-400 uppercase tracking-wider">
+      <div class="pb-3 border-b border-zinc-200/80">
+        <span class="text-xs font-mono font-semibold text-zinc-400 uppercase tracking-wider tabular-numbers">
           Semester 1 Projects
         </span>
       </div>
 
-      <!-- Project Cards Grid (2 Columns with 3D Tilt & Micro-Interactions) -->
+      <!-- Project Cards Grid (2 Columns with Concentric Radii, Layered Depth & 3D Tilt) -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-10 card-perspective-stage" id="portfolio-cards-grid">
 
         <!-- ================= CARD 1: CHALLENGE 1 (Smart Home) ================= -->
-        <a href="https://github.com/martimgalamba7/Smart-Home" target="_blank" rel="noopener noreferrer" class="interactive-card reveal-init group flex flex-col bg-white rounded-3xl border border-zinc-200/80 shadow-xs hover:border-zinc-400 hover:shadow-2xl transition-all duration-300 overflow-hidden cursor-pointer">
+        <a href="https://github.com/martimgalamba7/Smart-Home" target="_blank" rel="noopener noreferrer" class="interactive-card reveal-init group flex flex-col bg-white rounded-[28px] border border-zinc-200/80 hover:border-zinc-300/90 transition-all duration-300 overflow-hidden cursor-pointer">
           
-          <!-- Visual Area: Clean house icon centered on solid dark background with smooth hover scale -->
-          <div class="h-64 sm:h-72 w-full bg-zinc-950 flex items-center justify-center p-8 relative overflow-hidden">
-            <svg class="w-20 h-20 sm:w-24 sm:h-24 text-zinc-200 group-hover:text-emerald-400 group-hover:scale-110 transition-all duration-400 stroke-[1.5]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <!-- Visual Area: Clean house icon with concentric inner radius & subtle 1px ring outline -->
+          <div class="h-64 sm:h-72 w-full bg-zinc-950 rounded-t-[27px] ring-1 ring-black/[0.04] flex items-center justify-center p-8 relative overflow-hidden">
+            <svg class="w-20 h-20 sm:w-24 sm:h-24 text-zinc-200 group-hover:text-emerald-400 group-hover:scale-105 transition-all duration-300 stroke-[1.5]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
             </svg>
           </div>
@@ -272,22 +321,23 @@
 
             <!-- Bottom Metadata & Link -->
             <div class="flex items-center justify-between pt-4 border-t border-zinc-100 text-sm">
-              <span class="font-mono text-xs sm:text-sm text-zinc-400 font-medium">
+              <span class="font-mono text-xs sm:text-sm text-zinc-400 font-medium tabular-numbers">
                 Semester 1 • Challenge 1
               </span>
               <span class="font-bold text-zinc-900 group-hover:text-emerald-600 transition-colors flex items-center gap-1.5 group-hover:translate-x-1 duration-200">
-                View Project <span>&rarr;</span>
+                <span>View Project</span>
+                <span class="inline-block transition-transform duration-200 group-hover:translate-x-0.5">&rarr;</span>
               </span>
             </div>
           </div>
         </a>
 
         <!-- ================= CARD 2: CHALLENGE 2 (UniSport) ================= -->
-        <a href="https://fontysict.martimgalamba7.xyz/challenge2" class="interactive-card reveal-init group flex flex-col bg-white rounded-3xl border border-zinc-200/80 shadow-xs hover:border-blue-500 hover:shadow-2xl transition-all duration-300 overflow-hidden cursor-pointer relative">
+        <a href="https://fontysict.martimgalamba7.xyz/challenge2" class="interactive-card reveal-init group flex flex-col bg-white rounded-[28px] border border-zinc-200/80 hover:border-blue-400/80 transition-all duration-300 overflow-hidden cursor-pointer relative">
           
-          <!-- Visual Area: Clean full-color UniSport logo centered on crisp pure background -->
-          <div class="h-64 sm:h-72 w-full bg-zinc-50 border-b border-zinc-100/80 flex items-center justify-center p-8 relative overflow-hidden">
-            <img src="./assets/lettersUniSport.png" alt="UniSport" class="h-14 sm:h-20 w-auto max-w-[85%] object-contain drop-shadow-sm group-hover:scale-105 transition-transform duration-400" />
+          <!-- Visual Area: Clean full-color UniSport logo with concentric inner radius & subtle 1px ring outline -->
+          <div class="h-64 sm:h-72 w-full bg-zinc-50/90 rounded-t-[27px] ring-1 ring-black/[0.04] border-b border-zinc-100/80 flex items-center justify-center p-8 relative overflow-hidden">
+            <img src="./assets/lettersUniSport.png" alt="UniSport" class="h-14 sm:h-20 w-auto max-w-[85%] object-contain drop-shadow-xs group-hover:scale-105 transition-transform duration-300" />
           </div>
 
           <!-- Content Area -->
@@ -303,11 +353,12 @@
 
             <!-- Bottom Metadata & Link -->
             <div class="flex items-center justify-between pt-4 border-t border-zinc-100 text-sm">
-              <span class="font-mono text-xs sm:text-sm text-zinc-400 font-medium">
+              <span class="font-mono text-xs sm:text-sm text-zinc-400 font-medium tabular-numbers">
                 Semester 1 • Challenge 2
               </span>
               <span class="font-bold text-zinc-900 group-hover:text-blue-600 transition-colors flex items-center gap-1.5 group-hover:translate-x-1 duration-200">
-                View Project <span>&rarr;</span>
+                <span>View Project</span>
+                <span class="inline-block transition-transform duration-200 group-hover:translate-x-0.5">&rarr;</span>
               </span>
             </div>
           </div>
@@ -319,7 +370,7 @@
 
     <!-- ================= FOOTER ================= -->
     <footer class="w-full border-t border-zinc-200/80 pt-8 mt-16">
-      <div class="flex flex-col sm:flex-row items-center justify-between gap-3 text-xs sm:text-sm text-zinc-500">
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-3 text-xs sm:text-sm text-zinc-500 tabular-numbers">
         <span class="font-medium text-zinc-800">Martim Ferreira Galamba</span>
         <span class="text-zinc-500">Fontys University of Applied Sciences • Fontys ICT</span>
       </div>
