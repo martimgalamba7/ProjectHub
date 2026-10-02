@@ -157,6 +157,38 @@
     .group:hover .unisport-logo-card {
       filter: grayscale(0%) brightness(1);
     }
+
+    /* ----------------------------------------------------
+       Semester Accordion (CSS Grid Zero-Lag Expansion)
+    ---------------------------------------------------- */
+    .semester-toggle-btn {
+      cursor: pointer;
+      user-select: none;
+      transition: transform 0.15s cubic-bezier(0.2, 0, 0, 1), background-color 0.2s ease;
+    }
+    .semester-toggle-btn:active {
+      transform: scale(0.996);
+    }
+    .semester-chevron {
+      transition: transform 0.35s cubic-bezier(0.2, 0, 0, 1);
+      transform: rotate(0deg);
+    }
+    .semester-accordion.is-open .semester-chevron {
+      transform: rotate(180deg);
+    }
+    .semester-collapse-body {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows 0.4s cubic-bezier(0.2, 0, 0, 1), opacity 0.3s ease;
+      opacity: 0;
+    }
+    .semester-accordion.is-open .semester-collapse-body {
+      grid-template-rows: 1fr;
+      opacity: 1;
+    }
+    .semester-collapse-inner {
+      overflow: hidden;
+    }
   </style>
 </head>
 
@@ -295,84 +327,307 @@
       </p>
     </div>
 
-    <!-- Section Divider (Stagger Reveal) -->
-    <div class="space-y-6 reveal-init" id="portfolio-divider">
+    <!-- ================= SEMESTERS ACCORDION CONTAINER ================= -->
+    <div class="space-y-4 reveal-init w-full max-w-5xl mx-auto" id="semesters-accordion-container">
       
-      <div class="pb-3 border-b border-zinc-200/80">
-        <span class="text-xs font-mono font-semibold text-zinc-400 uppercase tracking-wider tabular-numbers">
-          Semester 1 Projects
-        </span>
+      <!-- ================= SEMESTER 1 (CURRENT / OPEN BY DEFAULT) ================= -->
+      <div class="semester-accordion is-open rounded-[24px] border border-zinc-200/90 bg-white/70 backdrop-blur-xs overflow-hidden shadow-xs transition-all duration-300" data-semester="1">
+        
+        <!-- Clickable Header Row -->
+        <button type="button" class="semester-toggle-btn w-full px-6 sm:px-8 py-5 sm:py-6 flex items-center justify-between text-left group bg-white hover:bg-zinc-50/90 transition-colors" aria-expanded="true">
+          <div class="flex items-center space-x-3.5 sm:space-x-5">
+            <span class="font-mono text-xs sm:text-sm font-bold text-zinc-400 group-hover:text-zinc-900 transition-colors tabular-numbers">01</span>
+            <div class="flex flex-col sm:flex-row sm:items-center sm:space-x-3.5">
+              <span class="text-lg sm:text-xl font-extrabold text-zinc-900 tracking-tight">Semester 1 Projects</span>
+              <span class="text-xs font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200/60 px-2.5 py-0.5 rounded-full w-fit mt-1 sm:mt-0 tabular-numbers">2 Projects • Active</span>
+            </div>
+          </div>
+          
+          <div class="flex items-center space-x-3 text-zinc-400 group-hover:text-zinc-900 transition-colors">
+            <span class="text-xs font-mono hidden sm:inline text-zinc-400 group-hover:text-zinc-700 transition-colors">Toggle</span>
+            <div class="w-8 h-8 rounded-full border border-zinc-200 flex items-center justify-center group-hover:border-zinc-400 group-hover:bg-white transition-all">
+              <svg class="semester-chevron w-4 h-4 text-zinc-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
+          </div>
+        </button>
+
+        <!-- Collapsible Body with Grid Cards -->
+        <div class="semester-collapse-body">
+          <div class="semester-collapse-inner">
+            <div class="p-6 sm:p-8 pt-3 sm:pt-4 border-t border-zinc-100">
+              
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-10 card-perspective-stage">
+
+                <!-- ================= CARD 1: CHALLENGE 1 (Smart Home) ================= -->
+                <a href="https://github.com/martimgalamba7/Smart-Home" target="_blank" rel="noopener noreferrer" class="interactive-card group flex flex-col bg-white rounded-[28px] border border-zinc-200/80 hover:border-zinc-300/90 transition-all duration-300 overflow-hidden cursor-pointer">
+                  
+                  <!-- Visual Area: Clean house icon with concentric inner radius & subtle 1px ring outline -->
+                  <div class="h-64 sm:h-72 w-full bg-zinc-950 rounded-t-[27px] ring-1 ring-black/[0.04] flex items-center justify-center p-8 relative overflow-hidden">
+                    <svg class="w-20 h-20 sm:w-24 sm:h-24 text-zinc-200 group-hover:text-emerald-400 group-hover:scale-105 transition-all duration-300 stroke-[1.5]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                    </svg>
+                  </div>
+
+                  <!-- Content Area -->
+                  <div class="p-7 sm:p-8 flex-grow flex flex-col justify-between space-y-6">
+                    <div class="space-y-3">
+                      <h3 class="text-2xl sm:text-3xl font-bold text-zinc-900 group-hover:text-emerald-600 transition-colors">
+                        Smart Home Automation
+                      </h3>
+                      <p class="text-sm sm:text-base text-zinc-500 leading-relaxed">
+                        IoT smart home ecosystem exploring home automation, sensor telemetry, and embedded system architecture.
+                      </p>
+                    </div>
+
+                    <!-- Bottom Metadata & Link -->
+                    <div class="flex items-center justify-between pt-4 border-t border-zinc-100 text-sm">
+                      <span class="font-mono text-xs sm:text-sm text-zinc-400 font-medium tabular-numbers">
+                        Semester 1 • Challenge 1
+                      </span>
+                      <span class="font-bold text-zinc-900 group-hover:text-emerald-600 transition-colors flex items-center gap-1.5 group-hover:translate-x-1 duration-200">
+                        <span>View Project</span>
+                        <span class="inline-block transition-transform duration-200 group-hover:translate-x-0.5">&rarr;</span>
+                      </span>
+                    </div>
+                  </div>
+                </a>
+
+                <!-- ================= CARD 2: CHALLENGE 2 (UniSport) ================= -->
+                <a href="https://fontysict.martimgalamba7.xyz/challenge2" class="interactive-card group flex flex-col bg-white rounded-[28px] border border-zinc-200/80 hover:border-blue-400/80 transition-all duration-300 overflow-hidden cursor-pointer relative">
+                  
+                  <!-- Visual Area: Clean full-color UniSport logo with concentric inner radius & subtle 1px ring outline -->
+                  <div class="h-64 sm:h-72 w-full bg-zinc-50/90 rounded-t-[27px] ring-1 ring-black/[0.04] border-b border-zinc-100/80 flex items-center justify-center p-8 relative overflow-hidden">
+                    <img src="./assets/lettersUniSport.png" alt="UniSport" class="unisport-logo-card h-14 sm:h-20 w-auto max-w-[85%] object-contain drop-shadow-xs group-hover:scale-105" />
+                  </div>
+
+                  <!-- Content Area -->
+                  <div class="p-7 sm:p-8 flex-grow flex flex-col justify-between space-y-6">
+                    <div class="space-y-3">
+                      <h3 class="text-2xl sm:text-3xl font-bold text-zinc-900 group-hover:text-blue-600 transition-colors">
+                        UniSport Platform
+                      </h3>
+                      <p class="text-sm sm:text-base text-zinc-500 leading-relaxed">
+                        Sports community web platform and empirical academic research study examining university athletic engagement and social networking.
+                      </p>
+                    </div>
+
+                    <!-- Bottom Metadata & Link -->
+                    <div class="flex items-center justify-between pt-4 border-t border-zinc-100 text-sm">
+                      <span class="font-mono text-xs sm:text-sm text-zinc-400 font-medium tabular-numbers">
+                        Semester 1 • Challenge 2
+                      </span>
+                      <span class="font-bold text-zinc-900 group-hover:text-blue-600 transition-colors flex items-center gap-1.5 group-hover:translate-x-1 duration-200">
+                        <span>View Project</span>
+                        <span class="inline-block transition-transform duration-200 group-hover:translate-x-0.5">&rarr;</span>
+                      </span>
+                    </div>
+                  </div>
+                </a>
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+
       </div>
 
-      <!-- Project Cards Grid (2 Columns with Concentric Radii, Layered Depth & 3D Tilt) -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-10 card-perspective-stage" id="portfolio-cards-grid">
-
-        <!-- ================= CARD 1: CHALLENGE 1 (Smart Home) ================= -->
-        <a href="https://github.com/martimgalamba7/Smart-Home" target="_blank" rel="noopener noreferrer" class="interactive-card reveal-init group flex flex-col bg-white rounded-[28px] border border-zinc-200/80 hover:border-zinc-300/90 transition-all duration-300 overflow-hidden cursor-pointer">
-          
-          <!-- Visual Area: Clean house icon with concentric inner radius & subtle 1px ring outline -->
-          <div class="h-64 sm:h-72 w-full bg-zinc-950 rounded-t-[27px] ring-1 ring-black/[0.04] flex items-center justify-center p-8 relative overflow-hidden">
-            <svg class="w-20 h-20 sm:w-24 sm:h-24 text-zinc-200 group-hover:text-emerald-400 group-hover:scale-105 transition-all duration-300 stroke-[1.5]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-            </svg>
-          </div>
-
-          <!-- Content Area -->
-          <div class="p-7 sm:p-8 flex-grow flex flex-col justify-between space-y-6">
-            <div class="space-y-3">
-              <h3 class="text-2xl sm:text-3xl font-bold text-zinc-900 group-hover:text-emerald-600 transition-colors">
-                Smart Home Automation
-              </h3>
-              <p class="text-sm sm:text-base text-zinc-500 leading-relaxed">
-                IoT smart home ecosystem exploring home automation, sensor telemetry, and embedded system architecture.
-              </p>
-            </div>
-
-            <!-- Bottom Metadata & Link -->
-            <div class="flex items-center justify-between pt-4 border-t border-zinc-100 text-sm">
-              <span class="font-mono text-xs sm:text-sm text-zinc-400 font-medium tabular-numbers">
-                Semester 1 • Challenge 1
-              </span>
-              <span class="font-bold text-zinc-900 group-hover:text-emerald-600 transition-colors flex items-center gap-1.5 group-hover:translate-x-1 duration-200">
-                <span>View Project</span>
-                <span class="inline-block transition-transform duration-200 group-hover:translate-x-0.5">&rarr;</span>
-              </span>
+      <!-- ================= SEMESTER 2 ================= -->
+      <div class="semester-accordion rounded-[24px] border border-zinc-200/90 bg-white/70 backdrop-blur-xs overflow-hidden shadow-xs transition-all duration-300" data-semester="2">
+        <button type="button" class="semester-toggle-btn w-full px-6 sm:px-8 py-5 sm:py-6 flex items-center justify-between text-left group bg-white hover:bg-zinc-50/90 transition-colors" aria-expanded="false">
+          <div class="flex items-center space-x-3.5 sm:space-x-5">
+            <span class="font-mono text-xs sm:text-sm font-bold text-zinc-400 group-hover:text-zinc-900 transition-colors tabular-numbers">02</span>
+            <div class="flex flex-col sm:flex-row sm:items-center sm:space-x-3.5">
+              <span class="text-lg sm:text-xl font-bold text-zinc-700 group-hover:text-zinc-900 tracking-tight transition-colors">Semester 2</span>
+              <span class="text-xs font-medium text-zinc-500 bg-zinc-100 border border-zinc-200/70 px-2.5 py-0.5 rounded-full w-fit mt-1 sm:mt-0 tabular-numbers">Upcoming • Spring 2027</span>
             </div>
           </div>
-        </a>
-
-        <!-- ================= CARD 2: CHALLENGE 2 (UniSport) ================= -->
-        <a href="https://fontysict.martimgalamba7.xyz/challenge2" class="interactive-card reveal-init group flex flex-col bg-white rounded-[28px] border border-zinc-200/80 hover:border-blue-400/80 transition-all duration-300 overflow-hidden cursor-pointer relative">
-          
-          <!-- Visual Area: Clean full-color UniSport logo with concentric inner radius & subtle 1px ring outline -->
-          <div class="h-64 sm:h-72 w-full bg-zinc-50/90 rounded-t-[27px] ring-1 ring-black/[0.04] border-b border-zinc-100/80 flex items-center justify-center p-8 relative overflow-hidden">
-            <img src="./assets/lettersUniSport.png" alt="UniSport" class="unisport-logo-card h-14 sm:h-20 w-auto max-w-[85%] object-contain drop-shadow-xs group-hover:scale-105" />
-          </div>
-
-          <!-- Content Area -->
-          <div class="p-7 sm:p-8 flex-grow flex flex-col justify-between space-y-6">
-            <div class="space-y-3">
-              <h3 class="text-2xl sm:text-3xl font-bold text-zinc-900 group-hover:text-blue-600 transition-colors">
-                UniSport Platform
-              </h3>
-              <p class="text-sm sm:text-base text-zinc-500 leading-relaxed">
-                Sports community web platform and empirical academic research study examining university athletic engagement and social networking.
-              </p>
-            </div>
-
-            <!-- Bottom Metadata & Link -->
-            <div class="flex items-center justify-between pt-4 border-t border-zinc-100 text-sm">
-              <span class="font-mono text-xs sm:text-sm text-zinc-400 font-medium tabular-numbers">
-                Semester 1 • Challenge 2
-              </span>
-              <span class="font-bold text-zinc-900 group-hover:text-blue-600 transition-colors flex items-center gap-1.5 group-hover:translate-x-1 duration-200">
-                <span>View Project</span>
-                <span class="inline-block transition-transform duration-200 group-hover:translate-x-0.5">&rarr;</span>
-              </span>
+          <div class="flex items-center space-x-3 text-zinc-400 group-hover:text-zinc-900 transition-colors">
+            <div class="w-8 h-8 rounded-full border border-zinc-200 flex items-center justify-center group-hover:border-zinc-400 group-hover:bg-white transition-all">
+              <svg class="semester-chevron w-4 h-4 text-zinc-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
             </div>
           </div>
-        </a>
+        </button>
+        <div class="semester-collapse-body">
+          <div class="semester-collapse-inner">
+            <div class="p-8 sm:p-12 border-t border-zinc-100 text-center space-y-2">
+              <p class="text-sm font-semibold text-zinc-700">Upcoming Semester 2 Challenges</p>
+              <p class="text-xs text-zinc-400 max-w-md mx-auto">Projects and academic deliverables for Semester 2 will be documented and published here upon commencement.</p>
+            </div>
+          </div>
+        </div>
+      </div>
 
+      <!-- ================= SEMESTER 3 ================= -->
+      <div class="semester-accordion rounded-[24px] border border-zinc-200/90 bg-white/70 backdrop-blur-xs overflow-hidden shadow-xs transition-all duration-300" data-semester="3">
+        <button type="button" class="semester-toggle-btn w-full px-6 sm:px-8 py-5 sm:py-6 flex items-center justify-between text-left group bg-white hover:bg-zinc-50/90 transition-colors" aria-expanded="false">
+          <div class="flex items-center space-x-3.5 sm:space-x-5">
+            <span class="font-mono text-xs sm:text-sm font-bold text-zinc-400 group-hover:text-zinc-900 transition-colors tabular-numbers">03</span>
+            <div class="flex flex-col sm:flex-row sm:items-center sm:space-x-3.5">
+              <span class="text-lg sm:text-xl font-bold text-zinc-700 group-hover:text-zinc-900 tracking-tight transition-colors">Semester 3</span>
+              <span class="text-xs font-medium text-zinc-500 bg-zinc-100 border border-zinc-200/70 px-2.5 py-0.5 rounded-full w-fit mt-1 sm:mt-0 tabular-numbers">Upcoming</span>
+            </div>
+          </div>
+          <div class="flex items-center space-x-3 text-zinc-400 group-hover:text-zinc-900 transition-colors">
+            <div class="w-8 h-8 rounded-full border border-zinc-200 flex items-center justify-center group-hover:border-zinc-400 group-hover:bg-white transition-all">
+              <svg class="semester-chevron w-4 h-4 text-zinc-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
+          </div>
+        </button>
+        <div class="semester-collapse-body">
+          <div class="semester-collapse-inner">
+            <div class="p-8 sm:p-12 border-t border-zinc-100 text-center space-y-2">
+              <p class="text-sm font-semibold text-zinc-700">Semester 3 Specialization Projects</p>
+              <p class="text-xs text-zinc-400 max-w-md mx-auto">Curriculum deliverables will appear here as coursework progresses.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= SEMESTER 4 ================= -->
+      <div class="semester-accordion rounded-[24px] border border-zinc-200/90 bg-white/70 backdrop-blur-xs overflow-hidden shadow-xs transition-all duration-300" data-semester="4">
+        <button type="button" class="semester-toggle-btn w-full px-6 sm:px-8 py-5 sm:py-6 flex items-center justify-between text-left group bg-white hover:bg-zinc-50/90 transition-colors" aria-expanded="false">
+          <div class="flex items-center space-x-3.5 sm:space-x-5">
+            <span class="font-mono text-xs sm:text-sm font-bold text-zinc-400 group-hover:text-zinc-900 transition-colors tabular-numbers">04</span>
+            <div class="flex flex-col sm:flex-row sm:items-center sm:space-x-3.5">
+              <span class="text-lg sm:text-xl font-bold text-zinc-700 group-hover:text-zinc-900 tracking-tight transition-colors">Semester 4</span>
+              <span class="text-xs font-medium text-zinc-500 bg-zinc-100 border border-zinc-200/70 px-2.5 py-0.5 rounded-full w-fit mt-1 sm:mt-0 tabular-numbers">Upcoming</span>
+            </div>
+          </div>
+          <div class="flex items-center space-x-3 text-zinc-400 group-hover:text-zinc-900 transition-colors">
+            <div class="w-8 h-8 rounded-full border border-zinc-200 flex items-center justify-center group-hover:border-zinc-400 group-hover:bg-white transition-all">
+              <svg class="semester-chevron w-4 h-4 text-zinc-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
+          </div>
+        </button>
+        <div class="semester-collapse-body">
+          <div class="semester-collapse-inner">
+            <div class="p-8 sm:p-12 border-t border-zinc-100 text-center space-y-2">
+              <p class="text-sm font-semibold text-zinc-700">Semester 4 Advanced Engineering</p>
+              <p class="text-xs text-zinc-400 max-w-md mx-auto">Curriculum deliverables will appear here as coursework progresses.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= SEMESTER 5 ================= -->
+      <div class="semester-accordion rounded-[24px] border border-zinc-200/90 bg-white/70 backdrop-blur-xs overflow-hidden shadow-xs transition-all duration-300" data-semester="5">
+        <button type="button" class="semester-toggle-btn w-full px-6 sm:px-8 py-5 sm:py-6 flex items-center justify-between text-left group bg-white hover:bg-zinc-50/90 transition-colors" aria-expanded="false">
+          <div class="flex items-center space-x-3.5 sm:space-x-5">
+            <span class="font-mono text-xs sm:text-sm font-bold text-zinc-400 group-hover:text-zinc-900 transition-colors tabular-numbers">05</span>
+            <div class="flex flex-col sm:flex-row sm:items-center sm:space-x-3.5">
+              <span class="text-lg sm:text-xl font-bold text-zinc-700 group-hover:text-zinc-900 tracking-tight transition-colors">Semester 5 • Internship</span>
+              <span class="text-xs font-medium text-zinc-500 bg-zinc-100 border border-zinc-200/70 px-2.5 py-0.5 rounded-full w-fit mt-1 sm:mt-0 tabular-numbers">Upcoming</span>
+            </div>
+          </div>
+          <div class="flex items-center space-x-3 text-zinc-400 group-hover:text-zinc-900 transition-colors">
+            <div class="w-8 h-8 rounded-full border border-zinc-200 flex items-center justify-center group-hover:border-zinc-400 group-hover:bg-white transition-all">
+              <svg class="semester-chevron w-4 h-4 text-zinc-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
+          </div>
+        </button>
+        <div class="semester-collapse-body">
+          <div class="semester-collapse-inner">
+            <div class="p-8 sm:p-12 border-t border-zinc-100 text-center space-y-2">
+              <p class="text-sm font-semibold text-zinc-700">Industry Internship Deliverables</p>
+              <p class="text-xs text-zinc-400 max-w-md mx-auto">Internship projects and professional portfolio evidence will be showcased here.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= SEMESTER 6 ================= -->
+      <div class="semester-accordion rounded-[24px] border border-zinc-200/90 bg-white/70 backdrop-blur-xs overflow-hidden shadow-xs transition-all duration-300" data-semester="6">
+        <button type="button" class="semester-toggle-btn w-full px-6 sm:px-8 py-5 sm:py-6 flex items-center justify-between text-left group bg-white hover:bg-zinc-50/90 transition-colors" aria-expanded="false">
+          <div class="flex items-center space-x-3.5 sm:space-x-5">
+            <span class="font-mono text-xs sm:text-sm font-bold text-zinc-400 group-hover:text-zinc-900 transition-colors tabular-numbers">06</span>
+            <div class="flex flex-col sm:flex-row sm:items-center sm:space-x-3.5">
+              <span class="text-lg sm:text-xl font-bold text-zinc-700 group-hover:text-zinc-900 tracking-tight transition-colors">Semester 6 • Advanced Track</span>
+              <span class="text-xs font-medium text-zinc-500 bg-zinc-100 border border-zinc-200/70 px-2.5 py-0.5 rounded-full w-fit mt-1 sm:mt-0 tabular-numbers">Upcoming</span>
+            </div>
+          </div>
+          <div class="flex items-center space-x-3 text-zinc-400 group-hover:text-zinc-900 transition-colors">
+            <div class="w-8 h-8 rounded-full border border-zinc-200 flex items-center justify-center group-hover:border-zinc-400 group-hover:bg-white transition-all">
+              <svg class="semester-chevron w-4 h-4 text-zinc-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
+          </div>
+        </button>
+        <div class="semester-collapse-body">
+          <div class="semester-collapse-inner">
+            <div class="p-8 sm:p-12 border-t border-zinc-100 text-center space-y-2">
+              <p class="text-sm font-semibold text-zinc-700">Advanced Track Specialization</p>
+              <p class="text-xs text-zinc-400 max-w-md mx-auto">Deliverables will be published here upon semester progression.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= SEMESTER 7 ================= -->
+      <div class="semester-accordion rounded-[24px] border border-zinc-200/90 bg-white/70 backdrop-blur-xs overflow-hidden shadow-xs transition-all duration-300" data-semester="7">
+        <button type="button" class="semester-toggle-btn w-full px-6 sm:px-8 py-5 sm:py-6 flex items-center justify-between text-left group bg-white hover:bg-zinc-50/90 transition-colors" aria-expanded="false">
+          <div class="flex items-center space-x-3.5 sm:space-x-5">
+            <span class="font-mono text-xs sm:text-sm font-bold text-zinc-400 group-hover:text-zinc-900 transition-colors tabular-numbers">07</span>
+            <div class="flex flex-col sm:flex-row sm:items-center sm:space-x-3.5">
+              <span class="text-lg sm:text-xl font-bold text-zinc-700 group-hover:text-zinc-900 tracking-tight transition-colors">Semester 7 • Minor / Exchange</span>
+              <span class="text-xs font-medium text-zinc-500 bg-zinc-100 border border-zinc-200/70 px-2.5 py-0.5 rounded-full w-fit mt-1 sm:mt-0 tabular-numbers">Upcoming</span>
+            </div>
+          </div>
+          <div class="flex items-center space-x-3 text-zinc-400 group-hover:text-zinc-900 transition-colors">
+            <div class="w-8 h-8 rounded-full border border-zinc-200 flex items-center justify-center group-hover:border-zinc-400 group-hover:bg-white transition-all">
+              <svg class="semester-chevron w-4 h-4 text-zinc-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
+          </div>
+        </button>
+        <div class="semester-collapse-body">
+          <div class="semester-collapse-inner">
+            <div class="p-8 sm:p-12 border-t border-zinc-100 text-center space-y-2">
+              <p class="text-sm font-semibold text-zinc-700">Minor Program & International Studies</p>
+              <p class="text-xs text-zinc-400 max-w-md mx-auto">Minor coursework and project results will appear here.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= SEMESTER 8 ================= -->
+      <div class="semester-accordion rounded-[24px] border border-zinc-200/90 bg-white/70 backdrop-blur-xs overflow-hidden shadow-xs transition-all duration-300" data-semester="8">
+        <button type="button" class="semester-toggle-btn w-full px-6 sm:px-8 py-5 sm:py-6 flex items-center justify-between text-left group bg-white hover:bg-zinc-50/90 transition-colors" aria-expanded="false">
+          <div class="flex items-center space-x-3.5 sm:space-x-5">
+            <span class="font-mono text-xs sm:text-sm font-bold text-zinc-400 group-hover:text-zinc-900 transition-colors tabular-numbers">08</span>
+            <div class="flex flex-col sm:flex-row sm:items-center sm:space-x-3.5">
+              <span class="text-lg sm:text-xl font-bold text-zinc-700 group-hover:text-zinc-900 tracking-tight transition-colors">Semester 8 • Graduation Thesis</span>
+              <span class="text-xs font-medium text-zinc-500 bg-zinc-100 border border-zinc-200/70 px-2.5 py-0.5 rounded-full w-fit mt-1 sm:mt-0 tabular-numbers">Upcoming</span>
+            </div>
+          </div>
+          <div class="flex items-center space-x-3 text-zinc-400 group-hover:text-zinc-900 transition-colors">
+            <div class="w-8 h-8 rounded-full border border-zinc-200 flex items-center justify-center group-hover:border-zinc-400 group-hover:bg-white transition-all">
+              <svg class="semester-chevron w-4 h-4 text-zinc-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
+          </div>
+        </button>
+        <div class="semester-collapse-body">
+          <div class="semester-collapse-inner">
+            <div class="p-8 sm:p-12 border-t border-zinc-100 text-center space-y-2">
+              <p class="text-sm font-semibold text-zinc-700">Bachelor Graduation Project & Thesis</p>
+              <p class="text-xs text-zinc-400 max-w-md mx-auto">Graduation research and capstone implementation will be published here.</p>
+            </div>
+          </div>
+        </div>
       </div>
 
     </div>
@@ -504,6 +759,19 @@
         card.addEventListener('mouseleave', () => {
           card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px)';
         });
+      });
+
+      // 4. Interactive Semester Accordion Dropdown
+      const semesterAccordions = Array.from(document.querySelectorAll('.semester-accordion'));
+      semesterAccordions.forEach((accordion) => {
+        const toggleBtn = accordion.querySelector('.semester-toggle-btn');
+        if (toggleBtn) {
+          toggleBtn.addEventListener('click', () => {
+            const isOpen = accordion.classList.contains('is-open');
+            accordion.classList.toggle('is-open');
+            toggleBtn.setAttribute('aria-expanded', !isOpen);
+          });
+        }
       });
     })();
   </script>
